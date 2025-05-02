@@ -1,61 +1,121 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Dental Clinic Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Framework**: Laravel 12.X
+**Styling**: Tailwind CSS  
 
-## About Laravel
+## 📘 Opis projektu
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+System zarządzania przychodnią dentystyczną umożliwia skuteczne administrowanie danymi pacjentów, dentystów, wizyt oraz transakcji. Aplikacja jest przeznaczona zarówno dla pracowników przychodni, jak i dla pacjentów, wspierając m.in. proces rejestracji, umawiania wizyt, prowadzenia dokumentacji medycznej oraz zarządzania płatnościami.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🧩 Struktura bazy danych
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Wszystkie pola i nazwy tabel zostały przetłumaczone na język angielski, zgodnie z wymaganiami projektu. Laravel automatycznie dodaje znaczniki czasu (`created_at`, `updated_at`) do każdego rekordu.
 
-## Learning Laravel
+### Tabela: `users`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+| Pole           | Typ danych | Opis |
+|----------------|------------|------|
+| id             | BIGINT (PK) | Unikalny identyfikator użytkownika |
+| first_name     | VARCHAR    | Imię użytkownika |
+| last_name      | VARCHAR    | Nazwisko użytkownika |
+| email          | VARCHAR (UNIQUE) | Adres e-mail |
+| password       | VARCHAR    | Zaszyfrowane hasło |
+| role           | ENUM(admin, patient, doctor) | Rola użytkownika |
+| created_at     | TIMESTAMP  | Data utworzenia |
+| updated_at     | TIMESTAMP  | Data aktualizacji |
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Tabela: `patients`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Pole           | Typ danych | Opis |
+|----------------|------------|------|
+| id             | BIGINT (PK) | Unikalny identyfikator pacjenta |
+| user_id        | BIGINT (FK) | Powiązanie z użytkownikiem |
+| phone_number   | VARCHAR    | Numer telefonu |
+| postal_code    | VARCHAR    | Kod pocztowy |
+| street         | VARCHAR    | Ulica |
+| city           | VARCHAR    | Miasto |
+| apartment_no   | VARCHAR    | Numer mieszkania |
+| building_unit  | VARCHAR    | Numer klatki |
+| date_of_birth  | DATE       | Data urodzenia |
+| created_at     | TIMESTAMP  | Data utworzenia |
+| updated_at     | TIMESTAMP  | Data aktualizacji |
 
-## Laravel Sponsors
+### Tabela: `dentists`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+| Pole           | Typ danych | Opis |
+|----------------|------------|------|
+| id             | BIGINT (PK) | Unikalny identyfikator dentysty |
+| user_id        | BIGINT (FK) | Powiązanie z użytkownikiem |
+| specialization | VARCHAR    | Specjalizacja (np. ortodonta, chirurg) |
+| phone_number   | VARCHAR    | Numer telefonu |
+| photo          | VARCHAR lub BLOB | Zdjęcie lekarza |
+| reviews        | VARCHAR    | Opinie pacjentów |
+| biography      | TEXT       | Opis kariery i doświadczenia |
+| created_at     | TIMESTAMP  | Data utworzenia |
+| updated_at     | TIMESTAMP  | Data aktualizacji |
 
-### Premium Partners
+### Tabela: `appointments`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+| Pole           | Typ danych | Opis |
+|----------------|------------|------|
+| id             | BIGINT (PK) | Unikalny identyfikator wizyty |
+| dentist_id     | BIGINT (FK) | Powiązanie z dentystą |
+| patient_id     | BIGINT (FK) | Powiązanie z pacjentem |
+| appointment_datetime | DATETIME | Data i godzina wizyty |
+| status         | ENUM(scheduled, completed, cancelled) | Status wizyty |
+| notes          | TEXT       | Opis wizyty |
+| created_at     | TIMESTAMP  | Data utworzenia |
+| updated_at     | TIMESTAMP  | Data aktualizacji |
 
-## Contributing
+### Tabela: `transactions`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Pole           | Typ danych | Opis |
+|----------------|------------|------|
+| id             | BIGINT (PK) | Unikalny identyfikator transakcji |
+| appointment_id | BIGINT (FK) | Powiązanie z wizytą |
+| amount         | DECIMAL    | Kwota transakcji |
+| payment_status | ENUM(paid, unpaid) | Status płatności |
+| payment_date   | DATE       | Data płatności |
+| created_at     | TIMESTAMP  | Data utworzenia |
+| updated_at     | TIMESTAMP  | Data aktualizacji |
 
-## Code of Conduct
+### Tabela: `reviews`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+| Pole           | Typ danych | Opis |
+|----------------|------------|------|
+| dentist_id     | BIGINT (FK) | Powiązanie z dentystą |
+| patient_id     | BIGINT (FK) | Powiązanie z pacjentem |
+| content        | TEXT       | Treść recenzji |
+| created_at     | TIMESTAMP  | Data utworzenia |
+| updated_at     | TIMESTAMP  | Data aktualizacji |
 
-## Security Vulnerabilities
+## 🧠 Funkcjonalności
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Dla pacjenta:
+- Rejestracja i logowanie do systemu
+- Umawianie wizyt u dostępnych dentystów
+- Przeglądanie historii wizyt
+- Możliwość opłacenia wizyty online
 
-## License
+### Dla dentysty:
+- Podgląd zaplanowanych wizyt
+- Potwierdzanie, anulowanie oraz dodawanie opisów wizyt
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Dla administratora:
+- Pełne zarządzanie użytkownikami (CRUD)
+- Zarządzanie kontami dentystów (CRUD)
+- Generowanie raportów z wizyt, transakcji i dostępności dentystów
+
+## 🔗 Relacje w bazie danych
+
+- **Users ↔ Patients** – relacja 1:1
+- **Users ↔ Dentists** – relacja 1:1
+- **Patients ↔ Appointments** – relacja 1:N
+- **Dentists ↔ Appointments** – relacja 1:N
+- **Appointments ↔ Transactions** – relacja 1:1
+- **Patients ↔ Reviews ↔ Dentists** – relacja N:M (pośrednio)
+
+## 📑 Dokumentacja projektu 
+
+Dokumentacja projektu znajduje się w katalogu `docs`
+
