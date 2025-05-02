@@ -2,52 +2,18 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <title>Brak dostępu</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
-            color: #1f2937;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            text-align: center;
-            padding: 2rem;
-            background-color: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #ef4444;
-        }
-        p {
-            margin-bottom: 1.5rem;
-        }
-        a {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background-color: #3b82f6;
-            color: white;
-            border-radius: 0.375rem;
-            text-decoration: none;
-            transition: background-color 0.2s ease;
-        }
-        a:hover {
-            background-color: #2563eb;
-        }
-    </style>
+    @vite('resources/css/app.css')
 </head>
-<body>
-    <div class="container">
-        <h1>🚫 Brak dostępu</h1>
-        <p>Nie masz odpowiednich uprawnień, aby zobaczyć tę stronę.</p>
+<body class="font-inter bg-gradient-to-b from-[#3E92CC] to-[#62B6CB] text-gray-800 flex items-center justify-center min-h-screen m-0 p-4">
+    <div class="bg-white text-center p-6 sm:p-8 rounded-xl shadow-xl w-full max-w-sm sm:max-w-md">
+        <h1 class="text-xl sm:text-3xl mb-4 sm:mb-6 text-[#13293D] font-semibold">🚫 Brak dostępu</h1>
+        <p class="text-base sm:text-xl mb-6 sm:mb-8">Nie masz odpowiednich uprawnień, aby zobaczyć tę stronę.</p>
+        <a href="/" class="inline-block px-5 py-3 sm:px-8 sm:py-4 bg-[#13293D] text-white rounded-lg no-underline transition duration-200 hover:bg-[#16324F] text-base sm:text-xl">
+            Wróć do strony głównej
+        </a>
     </div>
 </body>
 </html>
