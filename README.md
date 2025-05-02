@@ -46,7 +46,7 @@ Wszystkie pola i nazwy tabel zostały przetłumaczone na język angielski, zgodn
 |----------------|------------|------|
 | id             | BIGINT (PK) | Unikalny identyfikator dentysty |
 | user_id        | BIGINT (FK) | Powiązanie z użytkownikiem |
-| specialization | VARCHAR    | Specjalizacja (np. ortodonta, chirurg) |
+| specialization | VARCHAR    | Specjalizacja (np. ortodonta, higienista) |
 | phone_number   | VARCHAR    | Numer telefonu |
 | photo          | VARCHAR lub BLOB | Zdjęcie lekarza |
 | reviews        | VARCHAR    | Opinie pacjentów |
