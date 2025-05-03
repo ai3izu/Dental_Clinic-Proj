@@ -7,10 +7,11 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController
 {
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $credentials = $request->only('email', 'password');
 
-        if(Auth::attempt($credentials)){
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             $role = Auth::user()->role;
 
@@ -25,5 +26,4 @@ class LoginController
             'email' => 'The provided credentials do not match our records.',
         ]);
     }
-
 }

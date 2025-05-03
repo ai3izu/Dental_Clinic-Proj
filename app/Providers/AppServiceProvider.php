@@ -21,6 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Share the authenticated user's role with all views
+        // This is useful for displaying different content based on user roles
+        // such as admin, editor, or viewer.
         View::composer('*', function ($view) {
             $user = Auth::user();
             $view->with('role', $user ? $user->role : null);

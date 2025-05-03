@@ -13,39 +13,7 @@
             --color-3: #13293D;
             --color-4: #16324F;
             --color-5: #18435A;
-            --color-orange-50: oklch(0.98 0.016 73.684);
-            --color-orange-100: oklch(0.954 0.038 75.164);
-            --color-orange-200: oklch(0.901 0.076 70.697);
-            --color-orange-300: oklch(0.837 0.128 66.29);
-            --color-orange-400: oklch(0.75 0.183 55.934);
-            --color-orange-500: oklch(0.705 0.213 47.604);
-            --color-orange-600: oklch(0.646 0.222 41.116);
-            --color-orange-700: oklch(0.553 0.195 38.402);
-            --color-orange-800: oklch(0.47 0.157 37.304);
-            --color-orange-900: oklch(0.408 0.123 38.172);
-            --color-orange-950: oklch(0.266 0.079 36.259);
-            --color-yellow-50: oklch(0.987 0.026 102.212);
-            --color-yellow-100: oklch(0.973 0.071 103.193);
-            --color-yellow-200: oklch(0.945 0.129 101.54);
-            --color-yellow-300: oklch(0.905 0.182 98.111);
-            --color-yellow-400: oklch(0.852 0.199 91.936);
-            --color-yellow-500: oklch(0.795 0.184 86.047);
-            --color-yellow-600: oklch(0.681 0.162 75.834);
-            --color-yellow-700: oklch(0.554 0.135 66.442);
-            --color-yellow-800: oklch(0.476 0.114 61.907);
-            --color-yellow-900: oklch(0.421 0.095 57.708);
-            --color-yellow-950: oklch(0.286 0.066 53.813);
-            --color-gray-50: oklch(0.985 0 0);
-            --color-gray-100: oklch(0.967 0.001 286.375);
-            --color-gray-200: oklch(0.92 0.004 286.32);
             --color-gray-300: oklch(0.871 0.006 286.286);
-            --color-gray-400: oklch(0.705 0.015 286.067);
-            --color-gray-500: oklch(0.552 0.016 285.938);
-            --color-gray-600: oklch(0.442 0.017 285.786);
-            --color-gray-700: oklch(0.37 0.013 285.805);
-            --color-gray-800: oklch(0.274 0.006 286.033);
-            --color-gray-900: oklch(0.21 0.006 285.885);
-            --color-gray-950: oklch(0.141 0.005 285.823);
         }
 
         .achievement {
@@ -246,46 +214,47 @@
         </div>
 
         <div class="content">
-            <span class="title"> Klinika DentMax </span>
-            <span class="description"> Twoje zęby nas pokochają! </span>
+            <span class="title text-sm sm:text-base"> Klinika DentMax </span>
+            <span class="description text-xs sm:text-sm"> Twoje zęby nas pokochają! </span>
         </div>
     </div>
 
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 class="text-3xl font-semibold text-[#13293D] mb-6">Zaloguj się do swojego konta</h2>
+    <div class="bg-white p-4 sm:p-6 md:p-8 rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm md:max-w-md">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-[#13293D] mb-4 sm:mb-6">Zaloguj się</h2>
 
         @if($errors->any())
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div class="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-2 sm:mb-4 text-sm">
             <strong>Błąd:</strong> {{ $errors->first() }}
         </div>
         @endif
 
         <form method="POST" action="{{ route('login.post') }}">
             @csrf
-            <div class="mb-4">
-                <label for="email" class="block text-[#13293D] font-medium">Email:</label>
+            <div class="mb-2 sm:mb-4">
+                <label for="email" class="block text-sm sm:text-base text-[#13293D] font-medium">Email:</label>
                 <input type="email" name="email" id="email"
-                    class="w-full p-3 border border-[#2A628F] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5FA8D3]"
+                    class="w-full p-2 sm:p-3 border border-[#2A628F] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5FA8D3] text-sm"
                     required>
             </div>
 
-            <div class="mb-6">
-                <label for="password" class="block text-[#13293D] font-medium">Hasło:</label>
+            <div class="mb-4 sm:mb-6">
+                <label for="password" class="block text-sm sm:text-base text-[#13293D] font-medium">Hasło:</label>
                 <input type="password" name="password" id="password"
-                    class="w-full p-3 border border-[#2A628F] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5FA8D3]"
+                    class="w-full p-2 sm:p-3 border border-[#2A628F] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5FA8D3] text-sm"
                     required>
             </div>
 
             <button type="submit"
-                class="w-full bg-[#13293D] text-white p-3 rounded-lg font-semibold hover:bg-[#16324F] transition duration-300">Zaloguj
+                class="w-full bg-[#13293D] text-white p-2 sm:p-3 rounded-lg font-semibold hover:bg-[#16324F] transition duration-300 text-sm sm:text-base">Zaloguj
                 się</button>
         </form>
 
-        <p class="mt-4 text-center">
+        <p class="mt-2 sm:mt-4 text-center text-sm sm:text-base">
             Nie masz konta? <a href="{{ route('register') }}" class="text-[#5FA8D3] hover:underline">Zarejestruj
                 się</a>
         </p>
     </div>
 
 </body>
+
 </html>
