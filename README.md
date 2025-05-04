@@ -34,8 +34,8 @@ Wszystkie pola i nazwy tabel zostały przetłumaczone na język angielski, zgodn
 | postal_code    | VARCHAR    | Kod pocztowy |
 | street         | VARCHAR    | Ulica |
 | city           | VARCHAR    | Miasto |
-| apartment_no   | VARCHAR    | Numer mieszkania |
-| building_unit  | VARCHAR    | Numer klatki |
+| apartment_number   | VARCHAR    | Numer mieszkania |
+| staircase_number  | VARCHAR    | Numer klatki |
 | date_of_birth  | DATE       | Data urodzenia |
 | created_at     | TIMESTAMP  | Data utworzenia |
 | updated_at     | TIMESTAMP  | Data aktualizacji |
