@@ -22,7 +22,6 @@ Route::get('/unauthorized', function () {
     return view('auth.unauthorized');
 })->name('unauthorized');
 
-
 Route::middleware(['auth', 'role:patient'])->group(function () {
     // Get the patient profile completion form
     Route::get('/patient/complete-profile', [PatientProfileCompletion::class, 'show'])->name('patient.complete-profile');
@@ -30,12 +29,12 @@ Route::middleware(['auth', 'role:patient'])->group(function () {
     // This is the form that the patient fills out to complete their profile
     Route::post('/patient/complete-profile', [PatientProfileCompletion::class, 'update'])->name('patient.complete-profile.update');
     Route::get('/patient', function () {
-        return view('patient.dashboard');
+        return view('dashboard');
     })->name('patient.dashboard');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', function () {
-        return view('admin.dashboard');
+        return view('dashboard');
     })->name('admin.dashboard');
 });
