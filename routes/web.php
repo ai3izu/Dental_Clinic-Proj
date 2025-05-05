@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\DashboardContoller;
 use App\Http\Controllers\Admin\DoctorController;
+use App\Http\Controllers\Admin\DoctorUpdateController;
 use App\Http\Controllers\Admin\PatientController;
+use App\Http\Controllers\Admin\PatientUpdateController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Patient\ProfileCompletion;
 use Illuminate\Support\Facades\Route;
@@ -46,5 +48,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/admin/patients/{id}', [DashboardContoller::class, 'destroyPatient'])->name('admin.patient.destroy');
 
     Route::delete('/admin/doctors/{id}', [DashboardContoller::class, 'destroyDoctor'])->name('admin.doctors.destroy');
+
+    // Patient update
+    Route::get('/admin/patients/{id}/edit', [DashboardContoller::class, 'editPatient'])->name('admin.patients.edit');
+    Route::put('/admin/patients/{id}', [PatientUpdateController::class, 'update'])->name('admin.patients.update');
+
+    // Doctor update route
+    Route::get('/admin/doctors/{id}/edit', [DashboardContoller::class, 'editDoctor'])->name('admin.doctors.edit');
+    Route::get('/admin/doctors/{id}', [DoctorUpdateController::class, 'update'])->name('admin.doctors.update');
 });
 // Routes for the doctor

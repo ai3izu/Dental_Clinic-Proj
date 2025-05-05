@@ -1,35 +1,39 @@
-<div x-data="{ tab: '{{ request()->get('tab', 'patients') }}', searchQuery: '' }">
+<div x-data="{ tab: '{{ request()->get('tab', 'patients') }}', searchQuery: '{{ request()->get('search', '') }}' }">
     <!-- Zakładki -->
     <div class="flex space-x-4">
         <!-- Pacjenci -->
-        <a href="{{ route('admin.dashboard', ['tab' => 'patients', 'page' => 1]) }}"
+        <a :href="`{{ route('admin.dashboard', ['tab' => 'patients', 'page' => 1]) }}&search=${searchQuery}`"
             :class="{ 'bg-[#3E92CC] text-white': tab === 'patients' }"
             class="px-4 py-2 my-1 rounded-lg bg-gray-200 text-[#13293D] font-semibold">
             Pacjenci
         </a>
         <!-- Dentyści -->
-        <a href="{{ route('admin.dashboard', ['tab' => 'doctors', 'page' => 1]) }}"
+        <a :href="`{{ route('admin.dashboard', ['tab' => 'doctors', 'page' => 1]) }}&search=${searchQuery}`"
             :class="{ 'bg-[#3E92CC] text-white': tab === 'doctors' }"
             class="px-4 py-2 my-1 rounded-lg bg-gray-200 text-[#13293D] font-semibold">
             Dentyści
         </a>
         <!-- Statystyki -->
-        <a href="{{ route('admin.dashboard', ['tab' => 'stats', 'page' => 1]) }}"
+        <a :href="`{{ route('admin.dashboard', ['tab' => 'stats', 'page' => 1]) }}&search=${searchQuery}`"
             :class="{ 'bg-[#3E92CC] text-white': tab === 'stats' }"
             class="px-4 py-2 my-1 rounded-lg bg-gray-200 text-[#13293D] font-semibold">
             Statystyki
         </a>
     </div>
 
-    <!-- Pasek wyszukiwania -->
+    <!-- Formularz wyszukiwania -->
     <div class="my-4">
-        <input type="text" x-model="searchQuery" placeholder="Szukaj..." class="px-4 py-2 rounded-lg border">
+        <form action="{{ route('admin.dashboard') }}" method="GET" class="flex space-x-2">
+            <input type="text" name="search" x-model="searchQuery" placeholder="Szukaj..."
+                class="px-4 py-2 rounded-lg border w-64">
+            <input type="hidden" name="tab" :value="tab">
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Szukaj</button>
+        </form>
     </div>
 
     <!-- Pacjenci -->
     <div x-show="tab === 'patients'" x-cloak class="bg-[#EAF6FF] p-4 rounded-lg shadow overflow-auto">
         <h4 class="font-semibold text-[#13293D] mb-4">Pacjenci</h4>
-
         <!-- Filtracja wyników -->
         <table class="min-w-full text-sm text-[#13293D] border mb-4">
             <thead class="bg-[#3E92CC] text-white">
@@ -49,7 +53,9 @@
                         <td class="py-2 px-4">{{ $patient->user->email }}</td>
                         <td class="py-2 px-4">{{ $patient->phone_number }}</td>
                         <td class="py-2 px-4">
-                            <a href="#" class="text-blue-500">Edytuj</a>
+                            <a href="{{ route('admin.patients.edit', $patient->id) }}"
+                                class="text-blue-500 ml-4">Edytuj</a>
+
                             <form action="{{ route('admin.patient.destroy', $patient->id) }}" method="POST"
                                 style="display: inline-block;">
                                 @csrf
@@ -65,14 +71,13 @@
 
         <!-- Paginacja -->
         <div>
-            {{ $patients->appends(['tab' => 'patients'])->links() }}
+            {{ $patients->appends(['tab' => 'patients', 'search' => request()->get('search')])->links() }}
         </div>
     </div>
 
     <!-- Dentyści -->
     <div x-show="tab === 'doctors'" x-cloak class="bg-[#EAF6FF] p-4 rounded-lg shadow overflow-auto">
         <h4 class="font-semibold text-[#13293D] mb-4">Dentyści</h4>
-
         <!-- Filtracja wyników -->
         <table class="min-w-full text-sm text-[#13293D] border mb-4">
             <thead class="bg-[#3E92CC] text-white">
@@ -90,7 +95,8 @@
                         <td class="py-2 px-4">{{ $doctor->user->last_name }}</td>
                         <td class="py-2 px-4">{{ $doctor->user->email }}</td>
                         <td class="py-2 px-4">
-                            <a href="#" class="text-blue-500">Edytuj</a>
+                            <a href="{{ route('admin.doctors.edit', $doctor->id) }}"
+                                class="text-blue-500 ml-4">Edytuj</a>
                             <form action="{{ route('admin.doctors.destroy', $doctor->id) }}" method="POST"
                                 style="display: inline-block;">
                                 @csrf
@@ -106,7 +112,7 @@
 
         <!-- Paginacja -->
         <div>
-            {{ $doctors->appends(['tab' => 'doctors'])->links() }}
+            {{ $doctors->appends(['tab' => 'doctors', 'search' => request()->get('search')])->links() }}
         </div>
     </div>
 

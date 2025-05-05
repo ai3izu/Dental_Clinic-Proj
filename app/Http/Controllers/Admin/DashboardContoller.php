@@ -55,4 +55,16 @@ class DashboardContoller
 
         return redirect()->route('admin.dashboard', ['tab' => 'doctors']);
     }
+
+    public function editPatient($id)
+    {
+        $patient = Patient::findOrFail($id);
+        return view('admin.patient-edit', compact('patient'));
+    }
+
+    public function editDoctor($id)
+    {
+        $doctor = Doctor::findOrFail($id);
+        return view('admin.doctor-edit', compact('doctor'));
+    }
 }
