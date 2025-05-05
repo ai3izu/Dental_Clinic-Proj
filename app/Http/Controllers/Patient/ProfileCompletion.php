@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Patient;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PatientProfileCompletion
+class ProfileCompletion
 {
-    public function show()
+     public function show()
     {
         $patient = Auth::user()->patient;
         return view('patient.complete-profile', compact('patient'));
@@ -37,6 +37,6 @@ class PatientProfileCompletion
             'birth_date' => $request->birth_date,
         ]);
 
-        return redirect()->route('patient.dashboard')->with('success', 'Profile updated successfully.');
+        return redirect()->route('patient.dashboard')->with('success', 'Profil zaaktualizowany pomyślnie.');
     }
 }

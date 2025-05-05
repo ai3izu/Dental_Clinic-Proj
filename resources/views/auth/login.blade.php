@@ -222,10 +222,10 @@
     <div class="bg-white p-4 sm:p-6 md:p-8 rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm md:max-w-md">
         <h2 class="text-2xl sm:text-3xl font-semibold text-[#13293D] mb-4 sm:mb-6">Zaloguj się</h2>
 
-        @if($errors->any())
-        <div class="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-2 sm:mb-4 text-sm">
-            <strong>Błąd:</strong> {{ $errors->first() }}
-        </div>
+        @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-2 sm:mb-4 text-sm">
+                <strong>Błąd:</strong> {{ $errors->first() }}
+            </div>
         @endif
 
         <form method="POST" action="{{ route('login.post') }}">
@@ -252,6 +252,9 @@
         <p class="mt-2 sm:mt-4 text-center text-sm sm:text-base">
             Nie masz konta? <a href="{{ route('register') }}" class="text-[#5FA8D3] hover:underline">Zarejestruj
                 się</a>
+        </p>
+        <p class="mt-2 sm:mt-4 text-center text-sm sm:text-base">
+            <a href="{{ route('landing') }}" class="text-accent hover:underline">Strona główna</a>
         </p>
     </div>
 

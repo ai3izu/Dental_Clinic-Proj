@@ -10,18 +10,18 @@
 
 <body class="bg-gradient-to-b from-[#3E92CC] to-[#62B6CB] h-screen flex items-center justify-center flex-col">
 
-    <div class="bg-white p-6 sm:p-8 md:p-10 rounded-lg shadow-lg w-full max-w-sm sm:max-w-md">
+    <div class="bg-white p-6 sm:p-4 md:p-10 rounded-lg shadow-lg w-full max-w-sm sm:max-w-md">
         <h2 class="text-2xl sm:text-3xl font-semibold text-[#13293D] mb-4 sm:mb-6">Zarejestruj się</h2>
 
-        @if($errors->any())
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-2 sm:mb-4">
-            <strong>Błąd:</strong>
-            <ul>
-                @foreach($errors->all() as $err)
-                <li class="text-sm sm:text-base">{{ $err }}</li>
-                @endforeach
-            </ul>
-        </div>
+        @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-2 sm:mb-4">
+                <strong>Błąd:</strong>
+                <ul>
+                    @foreach ($errors->all() as $err)
+                        <li class="text-sm sm:text-base">{{ $err }}</li>
+                    @endforeach
+                </ul>
+            </div>
         @endif
 
         <form method="POST" action="{{ route('register.post') }}">
@@ -55,7 +55,8 @@
             </div>
 
             <div class="mb-4 sm:mb-6">
-                <label for="password_confirmation" class="block text-sm sm:text-base text-[#13293D] font-medium">Potwierdź hasło:</label>
+                <label for="password_confirmation"
+                    class="block text-sm sm:text-base text-[#13293D] font-medium">Potwierdź hasło:</label>
                 <input type="password" name="password_confirmation" id="password_confirmation"
                     class="w-full p-2 sm:p-3 border border-[#2A628F] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5FA8D3] text-sm sm:text-base"
                     required>
@@ -68,6 +69,9 @@
 
         <p class="mt-2 sm:mt-4 text-center text-sm sm:text-base">
             Masz już konto? <a href="{{ route('login') }}" class="text-[#5FA8D3] hover:underline">Zaloguj się</a>
+        </p>
+        <p class="mt-2 sm:mt-4 text-center text-sm sm:text-base">
+            <a href="{{ route('landing') }}" class="text-accent hover:underline">Strona główna</a>
         </p>
     </div>
 

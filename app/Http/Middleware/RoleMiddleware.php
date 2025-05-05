@@ -20,7 +20,7 @@ class RoleMiddleware
         // Check if the user is authenticated and has one of the specified roles
         // If not, return a 403 Forbidden response
         if(!Auth::check() || !in_array(Auth::user()->role, $roles)) {
-            return response()->redirectTo('unauthorized');
+            abort(403);
         }
         return $next($request);
     }
