@@ -6,6 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Faker\Factory as Faker;
+use Carbon\Carbon;
 
 class PatientSeeder extends Seeder
 {
@@ -14,27 +16,38 @@ class PatientSeeder extends Seeder
      */
     public function run(): void
     {
-        $patientId = DB::table('users')->insertGetId([
-            'first_name' => 'Jan',
-            'last_name' => 'Kowalski',
-            'email' => 'kowalski@example.pl',
-            'password' => Hash::make('password123'),
-            'role' => 'patient',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $faker = Faker::create('pl_PL');
+        $cities = ['Warszawa', 'Kraków', 'Łódź', 'Wrocław', 'Poznań', 'Gdańsk', 'Szczecin', 'Bydgoszcz', 'Lublin', 'Katowice'];
 
-        DB::table('patients')->insert([
-            'user_id' => $patientId,
-            'phone_number' => '123456789',
-            'city' => 'Dobrynia',
-            'street' => 'Dobrynia',
-            'postal_code' => '12-345',
-            'apartment_number' => '113',
-            'staircase_number' => null,
-            'birth_date' => '1990-01-01',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        for ($i = 0; $i < 40; $i++) {
+            $firstName = $faker->firstName;
+            $lastName = $faker->lastName;
+            $email = strtolower($firstName . '.' . $lastName . $i . '@example.com');
+
+            $patientId = DB::table('users')->insertGetId([
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'email' => $email,
+                'password' => Hash::make('password123'),
+                'role' => 'patient',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            $birthDate = $faker->dateTimeBetween('-80 years', '-18 years')->format('Y-m-d');
+
+            DB::table('patients')->insert([
+                'user_id' => $patientId,
+                'phone_number' => $faker->numerify('#########'),
+                'city' => $faker->randomElement($cities),
+                'street' => $faker->streetName,
+                'postal_code' => $faker->regexify('[0-9]{2}-[0-9]{3}'),
+                'apartment_number' => $faker->numberBetween(1, 200),
+                'staircase_number' => $faker->optional(0.3)->numberBetween(1, 5),
+                'birth_date' => $birthDate,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }

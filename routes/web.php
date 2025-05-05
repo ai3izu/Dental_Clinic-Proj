@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardContoller;
+use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Patient\ProfileCompletion;
@@ -38,7 +40,11 @@ Route::middleware(['auth', 'role:patient'])->group(function () {
 
 // Routes for the admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
-      Route::get('/admin', [PatientController::class, 'index'])->name('admin.dashboard');
-});
+    Route::get('/admin', [DashboardContoller::class, 'index'])->name('admin.dashboard');
 
+
+    Route::delete('/admin/patients/{id}', [DashboardContoller::class, 'destroyPatient'])->name('admin.patient.destroy');
+
+    Route::delete('/admin/doctors/{id}', [DashboardContoller::class, 'destroyDoctor'])->name('admin.doctors.destroy');
+});
 // Routes for the doctor

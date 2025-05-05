@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController
 {
-     public function login(Request $request)
+    public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
 
@@ -30,7 +30,7 @@ class AuthController
         ]);
     }
 
-   public function logout(Request $request)
+    public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
@@ -39,7 +39,7 @@ class AuthController
         return redirect()->route('landing');
     }
 
-     public function register(Request $request)
+    public function register(Request $request)
     {
         $request->validate([
             'first_name' => 'required|max:25',
