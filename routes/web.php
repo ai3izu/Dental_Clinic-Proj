@@ -55,6 +55,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // Doctor update route
     Route::get('/admin/doctors/{id}/edit', [DashboardContoller::class, 'editDoctor'])->name('admin.doctors.edit');
-    Route::get('/admin/doctors/{id}', [DoctorUpdateController::class, 'update'])->name('admin.doctors.update');
+    Route::put('/admin/doctors/{id}', [DoctorUpdateController::class, 'update'])->name('admin.doctors.update');
 });
 // Routes for the doctor
