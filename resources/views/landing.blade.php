@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="py-16 md:py-24 lg:py-32 text-center text-white">
+    <section id="about" class="py-16 md:py-24 lg:py-32 text-center text-white">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-4xl mx-auto">
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
@@ -128,7 +128,7 @@
                     class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-2">
                     <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
                         alt="Dr Piotr Wiśniewski" class="w-32 h-32 rounded-full object-cover mx-auto mb-6">
-                    <h3 class="font-semibold text-xl mb-1 text-center text-primaryDark">Dr Piotr Wiśniewski</h3>
+                    <h3 class="font-semibold text-xl mb-1 text-center text-primaryDark">Dr Jason Luv</h3>
                     <p class="text-gray-500 text-center mb-4">Chirurg stomatologiczny</p>
                     <p class="text-gray-600 mb-6">
                         Specjalista chirurgii stomatologicznej i szczękowo-twarzowej. Wykonuje skomplikowane zabiegi

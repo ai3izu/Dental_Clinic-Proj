@@ -22,16 +22,21 @@
                             class="text-gray-400 hover:text-white transition">Rejestracja</a></li>
                     <li><a href="{{ route('login') }}" class="text-gray-400 hover:text-white transition">Logowanie</a>
                     </li>
-                    <li><a href="#doctors" class="text-gray-400 hover:text-white transition">Nasi lekarze</a></li>
-                    <li><a href="#services" class="text-gray-400 hover:text-white transition">Cennik</a></li>
+                    <li><a href="{{ route('landing') }}#doctors" class="text-gray-400 hover:text-white transition">Nasi
+                            lekarze</a></li>
+                    <li><a href="{{ route('landing') }}#services"
+                            class="text-gray-400 hover:text-white transition">Cennik</a></li>
                 </ul>
             </div>
             <div>
                 <h4 class="text-lg font-semibold mb-4">Informacje</h4>
                 <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">O klinice</a></li>
-                    <li><a href="#reviews" class="text-gray-400 hover:text-white transition">Opinie</a></li>
-                    <li><a href="#faq" class="text-gray-400 hover:text-white transition">FAQ</a></li>
+                    <li><a href="{{ route('landing') }}#about" class="text-gray-400 hover:text-white transition">O
+                            klinice</a></li>
+                    <li><a href="{{ route('landing') }}#reviews"
+                            class="text-gray-400 hover:text-white transition">Opinie</a></li>
+                    <li><a href="{{ route('landing') }}#faq" class="text-gray-400 hover:text-white transition">FAQ</a>
+                    </li>
                 </ul>
             </div>
             <div>
