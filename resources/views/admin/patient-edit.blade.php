@@ -30,6 +30,51 @@
             </div>
 
             <div>
+                <label for="postal_code" class="block text-sm sm:text-base font-semibold text-[#13293D] mb-1">Kod
+                    pocztowy</label>
+                <input type="text" id="postal_code" name="postal_code"
+                    value="{{ old('postal_code', $patient->postal_code) }}"
+                    class="w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3E92CC] focus:outline-none text-sm sm:text-base">
+            </div>
+
+            <div>
+                <label for="city" class="block text-sm sm:text-base font-semibold text-[#13293D] mb-1">Miasto</label>
+                <input type="text" id="city" name="city" value="{{ old('city', $patient->city) }}"
+                    class="w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3E92CC] focus:outline-none text-sm sm:text-base">
+            </div>
+
+            <div>
+                <label for="street" class="block text-sm sm:text-base font-semibold text-[#13293D] mb-1">Ulica</label>
+                <input type="text" id="street" name="street" value="{{ old('street', $patient->street) }}"
+                    class="w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3E92CC] focus:outline-none text-sm sm:text-base">
+            </div>
+
+            <div>
+                <label for="apartment_number" class="block text-sm sm:text-base font-semibold text-[#13293D] mb-1">Numer
+                    mieszkania</label>
+                <input type="text" id="apartment_number" name="apartment_number"
+                    value="{{ old('apartment_number', $patient->apartment_number) }}"
+                    class="w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3E92CC] focus:outline-none text-sm sm:text-base">
+            </div>
+
+            <div>
+                <label for="staircase_number" class="block text-sm sm:text-base font-semibold text-[#13293D] mb-1">Numer
+                    klatki</label>
+                <input type="text" id="staircase_number" name="staircase_number"
+                    value="{{ old('staircase_number', $patient->staircase_number) }}"
+                    class="w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3E92CC] focus:outline-none text-sm sm:text-base">
+            </div>
+
+            <div>
+                <label for="birth_date" class="block text-sm sm:text-base font-semibold text-[#13293D] mb-1">Data
+                    urodzenia</label>
+                <input type="date" id="birth_date" name="birth_date"
+                    value="{{ old('birth_date', $patient->birth_date) }}"
+                    class="w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3E92CC] focus:outline-none text-sm sm:text-base">
+            </div>
+
+
+            <div>
                 <label for="phone_number" class="block text-sm sm:text-base font-semibold text-[#13293D] mb-1">Numer
                     telefonu</label>
                 <input type="text" id="phone_number" name="phone_number"

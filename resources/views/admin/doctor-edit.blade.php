@@ -29,6 +29,37 @@
                     class="w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3E92CC] focus:outline-none text-sm sm:text-base">
             </div>
 
+            <div>
+                <label for="specialization"
+                    class="block text-sm sm:text-base font-semibold text-[#13293D] mb-1">Specjalizacja</label>
+                <input type="text" id="specialization" name="specialization"
+                    value="{{ old('specialization', $doctor->specialization) }}"
+                    class="w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3E92CC] focus:outline-none text-sm sm:text-base">
+            </div>
+
+            <div>
+                <label for="phone_number" class="block text-sm sm:text-base font-semibold text-[#13293D] mb-1">Numer
+                    telefonu</label>
+                <input type="text" id="phone_number" name="phone_number"
+                    value="{{ old('phone_number', $doctor->phone_number) }}"
+                    class="w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3E92CC] focus:outline-none text-sm sm:text-base">
+            </div>
+
+            <div>
+                <label for="photo_url" class="block text-sm sm:text-base font-semibold text-[#13293D] mb-1">Url
+                    zdjęcia</label>
+                <input type="text" id="photo_url" name="photo_url" value="{{ old('photo_url', $doctor->photo_url) }}"
+                    class="w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3E92CC] focus:outline-none text-sm sm:text-base">
+            </div>
+
+            <div>
+                <label for="description" class="block text-sm sm:text-base font-semibold text-[#13293D] mb-1">Kariera
+                    zawodowa</label>
+                <input type="text" id="description" name="description"
+                    value="{{ old('description', $doctor->description) }}"
+                    class="w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3E92CC] focus:outline-none text-sm sm:text-base">
+            </div>
+
             <div class="pt-3 sm:pt-4 flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-2 sm:space-y-0">
                 <button type="submit"
                     class="bg-[#3E92CC] hover:bg-[#2f6ea3] text-white font-semibold px-5 py-2 rounded-lg shadow text-sm sm:text-base">
