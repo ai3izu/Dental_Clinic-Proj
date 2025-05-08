@@ -1,24 +1,43 @@
 <div x-data="{ tab: '{{ request()->get('tab', 'patients') }}', searchQuery: '{{ request()->get('search', '') }}' }">
     <!-- Zakładki -->
-    <div class="flex space-x-4">
-        <!-- Pacjenci -->
-        <a :href="`{{ route('admin.dashboard', ['tab' => 'patients', 'page' => 1]) }}&search=${searchQuery}`"
-            :class="{ 'bg-[#3E92CC] text-white': tab === 'patients' }"
-            class="px-4 py-2 my-1 rounded-lg bg-gray-200 text-[#13293D] font-semibold">
-            Pacjenci
-        </a>
-        <!-- Dentyści -->
-        <a :href="`{{ route('admin.dashboard', ['tab' => 'doctors', 'page' => 1]) }}&search=${searchQuery}`"
-            :class="{ 'bg-[#3E92CC] text-white': tab === 'doctors' }"
-            class="px-4 py-2 my-1 rounded-lg bg-gray-200 text-[#13293D] font-semibold">
-            Dentyści
-        </a>
-        <!-- Statystyki -->
-        <a :href="`{{ route('admin.dashboard', ['tab' => 'stats', 'page' => 1]) }}&search=${searchQuery}`"
-            :class="{ 'bg-[#3E92CC] text-white': tab === 'stats' }"
-            class="px-4 py-2 my-1 rounded-lg bg-gray-200 text-[#13293D] font-semibold">
-            Statystyki
-        </a>
+    <div class="flex flex-wrap items-center justify-between space-y-2 md:space-y-0">
+        <!-- Lewa część: zakładki i szukaj -->
+        <div class="flex flex-wrap items-center space-x-2">
+            <!-- Zakładki -->
+            <div class="flex space-x-2">
+                <a :href="`{{ route('admin.dashboard', ['tab' => 'patients', 'page' => 1]) }}&search=${searchQuery}`"
+                    :class="{ 'bg-[#3E92CC] text-white': tab === 'patients' }"
+                    class="px-4 py-2 rounded-lg bg-gray-200 text-[#13293D] font-semibold">
+                    Pacjenci
+                </a>
+                <a :href="`{{ route('admin.dashboard', ['tab' => 'doctors', 'page' => 1]) }}&search=${searchQuery}`"
+                    :class="{ 'bg-[#3E92CC] text-white': tab === 'doctors' }"
+                    class="px-4 py-2 rounded-lg bg-gray-200 text-[#13293D] font-semibold">
+                    Dentyści
+                </a>
+                <a :href="`{{ route('admin.dashboard', ['tab' => 'stats', 'page' => 1]) }}&search=${searchQuery}`"
+                    :class="{ 'bg-[#3E92CC] text-white': tab === 'stats' }"
+                    class="px-4 py-2 rounded-lg bg-gray-200 text-[#13293D] font-semibold">
+                    Statystyki
+                </a>
+            </div>
+        </div>
+
+        <!-- Prawa część: przycisk Dodaj -->
+        <div>
+            <template x-if="tab === 'patients'">
+                <a href="{{ route('admin.patients.create') }}"
+                    class="px-4 py-2 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600">
+                    Dodaj nowego pacjenta
+                </a>
+            </template>
+            <template x-if="tab === 'doctors'">
+                <a href="{{ route('admin.doctors.create') }}"
+                    class="px-4 py-2 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600">
+                    Dodaj nowego dentystę
+                </a>
+            </template>
+        </div>
     </div>
 
     <!-- Formularz wyszukiwania -->
