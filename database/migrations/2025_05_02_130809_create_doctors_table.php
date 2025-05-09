@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('specialization')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('photo_url')->nullable();
+            $table->string('photo_alt')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });

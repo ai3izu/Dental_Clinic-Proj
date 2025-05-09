@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Doctor;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateDoctorRequest extends FormRequest
@@ -21,8 +22,19 @@ class UpdateDoctorRequest extends FormRequest
      */
     public function rules(): array
     {
+        $doctorId = $this->route('id');
+        $userId = Doctor::findOrFail($doctorId)->user_id;
+
         return [
-            //
+            'first_name' => 'sometimes|required|string|max:255',
+            'last_name' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|email|unique:users,email,' . $userId,
+            'password' => 'nullable|string|min:8|confirmed',
+            'specialization' => 'nullable|string|max:255',
+            'phone_number' => 'nullable|string|max:15',
+            'photo_url' => 'nullable|url',
+            'photo_alt' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:2000',
         ];
     }
 }

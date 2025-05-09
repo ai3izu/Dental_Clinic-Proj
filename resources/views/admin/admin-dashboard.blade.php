@@ -66,24 +66,24 @@
             </thead>
             <tbody>
                 @foreach ($patients as $patient)
-                    <tr class="border-b">
-                        <td class="py-2 px-4">{{ $patient->user->first_name }}</td>
-                        <td class="py-2 px-4">{{ $patient->user->last_name }}</td>
-                        <td class="py-2 px-4">{{ $patient->user->email }}</td>
-                        <td class="py-2 px-4">{{ $patient->phone_number }}</td>
-                        <td class="py-2 px-4">
-                            <a href="{{ route('admin.patients.edit', $patient->id) }}"
-                                class="text-blue-500 ml-4">Edytuj</a>
+                <tr class="border-b">
+                    <td class="py-2 px-4">{{ $patient->user->first_name }}</td>
+                    <td class="py-2 px-4">{{ $patient->user->last_name }}</td>
+                    <td class="py-2 px-4">{{ $patient->user->email }}</td>
+                    <td class="py-2 px-4">{{ $patient->phone_number }}</td>
+                    <td class="py-2 px-4">
+                        <a href="{{ route('admin.patients.edit', $patient->id) }}"
+                            class="text-blue-500 ml-4">Edytuj</a>
 
-                            <form action="{{ route('admin.patient.destroy', $patient->id) }}" method="POST"
-                                style="display: inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-500 ml-4"
-                                    onclick="return confirm('Czy na pewno chcesz usunąć tego pacjenta?')">Usuń</button>
-                            </form>
-                        </td>
-                    </tr>
+                        <form action="{{ route('admin.patient.destroy', $patient->id) }}" method="POST"
+                            style="display: inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-500 ml-4"
+                                onclick="return confirm('Czy na pewno chcesz usunąć tego pacjenta?')">Usuń</button>
+                        </form>
+                    </td>
+                </tr>
                 @endforeach
             </tbody>
         </table>
@@ -109,22 +109,22 @@
             </thead>
             <tbody>
                 @foreach ($doctors as $doctor)
-                    <tr class="border-b">
-                        <td class="py-2 px-4">{{ $doctor->user->first_name }}</td>
-                        <td class="py-2 px-4">{{ $doctor->user->last_name }}</td>
-                        <td class="py-2 px-4">{{ $doctor->user->email }}</td>
-                        <td class="py-2 px-4">
-                            <a href="{{ route('admin.doctors.edit', $doctor->id) }}"
-                                class="text-blue-500 ml-4">Edytuj</a>
-                            <form action="{{ route('admin.doctors.destroy', $doctor->id) }}" method="POST"
-                                style="display: inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-500 ml-4"
-                                    onclick="return confirm('Czy na pewno chcesz usunąć tego pacjenta?')">Usuń</button>
-                            </form>
-                        </td>
-                    </tr>
+                <tr class="border-b">
+                    <td class="py-2 px-4">{{ $doctor->user->first_name }}</td>
+                    <td class="py-2 px-4">{{ $doctor->user->last_name }}</td>
+                    <td class="py-2 px-4">{{ $doctor->user->email }}</td>
+                    <td class="py-2 px-4">
+                        <a href="{{ route('admin.doctors.edit', $doctor->id) }}"
+                            class="text-blue-500 ml-4">Edytuj</a>
+                        <form action="{{ route('admin.doctors.destroy', $doctor->id) }}" method="POST"
+                            style="display: inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-500 ml-4"
+                                onclick="return confirm('Czy na pewno chcesz usunąć tego pacjenta?')">Usuń</button>
+                        </form>
+                    </td>
+                </tr>
                 @endforeach
             </tbody>
         </table>

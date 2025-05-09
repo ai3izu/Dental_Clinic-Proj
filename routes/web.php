@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardContoller;
-use App\Http\Controllers\Admin\DoctorUpdateController;
-use App\Http\Controllers\Admin\PatientUpdateController;
+use App\Http\Controllers\Admin\DoctorController;
+use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Patient\ProfileCompletion;
 use Illuminate\Support\Facades\Route;
@@ -44,27 +44,27 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', [DashboardContoller::class, 'index'])->name('admin.dashboard');
 
     // Patient CRUD routes
-    Route::get('/admin/patients/create', [PatientUpdateController::class, 'create'])->name('admin.patients.create');
+    Route::get('/admin/patients/create', [PatientController::class, 'create'])->name('admin.patients.create');
 
-    Route::post('/admin/patients', [PatientUpdateController::class, 'store'])->name('admin.patients.store');
+    Route::post('/admin/patients', [PatientController::class, 'store'])->name('admin.patients.store');
 
-    Route::delete('/admin/patients/{id}', [DashboardContoller::class, 'destroyPatient'])->name('admin.patient.destroy');
+    Route::delete('/admin/patients/{id}', [PatientController::class, 'destroyPatient'])->name('admin.patient.destroy');
 
-    Route::get('/admin/patients/{id}/edit', [DashboardContoller::class, 'editPatient'])->name('admin.patients.edit');
+    Route::get('/admin/patients/{id}/edit', [PatientController::class, 'editPatient'])->name('admin.patients.edit');
 
-    Route::put('/admin/patients/{id}', [PatientUpdateController::class, 'update'])->name('admin.patients.update');
+    Route::put('/admin/patients/{id}', [PatientController::class, 'update'])->name('admin.patients.update');
 
 
 
     // Doctor CRUD routes
-    Route::get('/admin/doctors/create', [DoctorUpdateController::class, 'create'])->name('admin.doctors.create');
+    Route::get('/admin/doctors/create', [DoctorController::class, 'create'])->name('admin.doctors.create');
 
-    Route::post('/admin/doctors', [DoctorUpdateController::class, 'store'])->name('admin.doctors.store');
+    Route::post('/admin/doctors', [DoctorController::class, 'store'])->name('admin.doctors.store');
 
-    Route::delete('/admin/doctors/{id}', [DashboardContoller::class, 'destroyDoctor'])->name('admin.doctors.destroy');
+    Route::delete('/admin/doctors/{id}', [DoctorController::class, 'destroyDoctor'])->name('admin.doctors.destroy');
 
-    Route::get('/admin/doctors/{id}/edit', [DashboardContoller::class, 'editDoctor'])->name('admin.doctors.edit');
+    Route::get('/admin/doctors/{id}/edit', [DoctorController::class, 'editDoctor'])->name('admin.doctors.edit');
 
-    Route::put('/admin/doctors/{id}', [DoctorUpdateController::class, 'update'])->name('admin.doctors.update');
+    Route::put('/admin/doctors/{id}', [DoctorController::class, 'update'])->name('admin.doctors.update');
 });
 // Routes for the doctor

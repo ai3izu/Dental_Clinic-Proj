@@ -16,28 +16,28 @@
                 @method('PUT')
             @endif
 
-            <input name="first_name" placeholder="Imię" value="{{ old('first_name', $doctor->user->first_name ?? '') }}"
-                required class="border p-2 rounded w-full">
+            <input type="text" name="first_name" placeholder="Imię"
+                value="{{ old('first_name', $doctor->user->first_name ?? '') }}" required class="border p-2 rounded w-full">
 
-            <input name="last_name" placeholder="Nazwisko" value="{{ old('last_name', $doctor->user->last_name ?? '') }}"
-                required class="border p-2 rounded w-full">
+            <input type="text" name="last_name" placeholder="Nazwisko"
+                value="{{ old('last_name', $doctor->user->last_name ?? '') }}" required class="border p-2 rounded w-full">
 
             <input type="email" name="email" placeholder="Email" value="{{ old('email', $doctor->user->email ?? '') }}"
                 required class="border p-2 rounded w-full">
 
-            <input name="phone_number" placeholder="Numer telefonu"
+            <input type="text" name="phone_number" placeholder="Numer telefonu"
                 value="{{ old('phone_number', $doctor->phone_number ?? '') }}" class="border p-2 rounded w-full">
 
-            <input name="postal_code" placeholder="Specjalizacja"
+            <input name="specialization" placeholder="Specjalizacja"
                 value="{{ old('specialization', $doctor->specialization ?? '') }}" class="border p-2 rounded w-full">
 
-            <input name="city" placeholder="Miasto" value="{{ old('city', $doctor->city ?? '') }}"
-                class="border p-2 rounded w-full">
+            <input type="text" name="photo_alt" placeholder="URL zdjęcia"
+                value="{{ old('photo_url', $doctor->photo_url ?? '') }}" class="border p-2 rounded w-full">
 
-            <input name="street" placeholder="URL zdjęcia" value="{{ old('photo_url', $doctor->photo_url ?? '') }}"
-                class="border p-2 rounded w-full">
+            <input type="text" name="photo_alt" placeholder="ALT zdjęcia"
+                value="{{ old('photo_alt', $doctor->photo_alt ?? '') }}" class="border p-2 rounded w-full">
 
-            <input name="apartment_number" placeholder="Opis kariery zawodowej"
+            <input type="text" name="apartment_number" placeholder="Opis kariery zawodowej"
                 value="{{ old('description', $doctor->description ?? '') }}" class="border p-2 rounded w-full">
 
             <div class="pt-3 flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-2 sm:space-y-0">

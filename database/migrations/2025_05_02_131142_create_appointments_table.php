@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('patient_id')->constrained('patients')->onDelete('cascade');
             $table->dateTime('appointment_date');
             $table->enum('status', ['scheduled', 'completed', 'canceled'])->default('scheduled');
+            $table->enum('visit_type', ['implantology', 'orthodontics', 'root_canal', 'cavity_treatment'])->default('cavity_treatment');
             $table->text('notes')->nullable();
             $table->timestamps();
         });
