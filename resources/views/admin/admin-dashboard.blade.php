@@ -5,12 +5,12 @@
         <div class="flex flex-wrap items-center space-x-2">
             <!-- Zakładki -->
             <div class="flex space-x-2">
-                <a :href="`{{ route('admin.dashboard', ['tab' => 'patients', 'page' => 1]) }}&search=${searchQuery}`"
+                <a :href="`{{ route('admin.dashboard', ['tab' => 'patients', 'page' => 1]) }}`"
                     :class="{ 'bg-[#3E92CC] text-white': tab === 'patients' }"
                     class="px-4 py-2 rounded-lg bg-gray-200 text-[#13293D] font-semibold">
                     Pacjenci
                 </a>
-                <a :href="`{{ route('admin.dashboard', ['tab' => 'doctors', 'page' => 1]) }}&search=${searchQuery}`"
+                <a :href="`{{ route('admin.dashboard', ['tab' => 'doctors', 'page' => 1]) }}`"
                     :class="{ 'bg-[#3E92CC] text-white': tab === 'doctors' }"
                     class="px-4 py-2 rounded-lg bg-gray-200 text-[#13293D] font-semibold">
                     Dentyści

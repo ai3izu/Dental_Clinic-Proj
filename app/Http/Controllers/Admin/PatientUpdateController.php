@@ -7,6 +7,7 @@ use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class PatientUpdateController
 {
@@ -28,12 +29,13 @@ class PatientUpdateController
 
     public function create()
     {
-        return view('admin.patient-create');
+        return view('admin.patient-form');
     }
 
     public function store(StorePatientRequest $request)
     {
         $validated = $request->validated();
+
 
         $user = User::create([
             'first_name' => $validated['first_name'],
@@ -41,12 +43,11 @@ class PatientUpdateController
             'email' => $validated['email'],
             'password' => Hash::make('password123'),
         ]);
-
         Patient::create([
             'user_id' => $user->id,
             'phone_number' => $validated['phone_number'],
         ]);
 
-        return redirect()->route('admin.dashboard', ['tab' => 'patients'])->with('succes', 'Pacjent dodany pomyślnie');
+        return redirect()->route('admin.dashboard', ['tab' => 'patients'])->with('success', 'Pacjent dodany pomyślnie');
     }
 }

@@ -59,12 +59,12 @@ class DashboardContoller
     public function editPatient($id)
     {
         $patient = Patient::findOrFail($id);
-        return view('admin.patient-edit', compact('patient'));
+        return view('admin.patient-form', compact('patient'));
     }
 
     public function editDoctor($id)
     {
         $doctor = Doctor::findOrFail($id);
-        return view('admin.doctor-edit', compact('doctor'));
+        return view('admin.doctor-form', compact('doctor'));
     }
 }

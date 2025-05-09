@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\StorePatientRequest;
 use App\Models\Doctor;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class DoctorUpdateController
 {
@@ -22,8 +25,27 @@ class DoctorUpdateController
 
     public function create()
     {
-        return view('admin.doctor-create');
+        return view('admin.doctor-form');
     }
 
-    public function store(Request $request) {}
+    public function store(StorePatientRequest $request)
+    {
+        $validated = $request->validated();
+
+
+        $user = User::create([
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'email' => $validated['email'],
+            'password' => Hash::make('password123'),
+            'role' => 'doctor',
+        ]);
+
+        Doctor::create([
+            'user_id' => $user->id,
+            'phone_number' => $validated['phone_number'],
+        ]);
+
+        return redirect()->route('admin.dashboard', ['tab' => 'doctors'])->with('success', 'Pacjent dodany pomyślnie');
+    }
 }

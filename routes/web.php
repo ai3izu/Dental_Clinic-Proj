@@ -46,7 +46,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // Patient CRUD routes
     Route::get('/admin/patients/create', [PatientUpdateController::class, 'create'])->name('admin.patients.create');
 
-    Route::post('admin/patients', [PatientUpdateController::class, 'store'])->name('admin.patients.store');
+    Route::post('/admin/patients', [PatientUpdateController::class, 'store'])->name('admin.patients.store');
 
     Route::delete('/admin/patients/{id}', [DashboardContoller::class, 'destroyPatient'])->name('admin.patient.destroy');
 
@@ -58,6 +58,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // Doctor CRUD routes
     Route::get('/admin/doctors/create', [DoctorUpdateController::class, 'create'])->name('admin.doctors.create');
+
+    Route::post('/admin/doctors', [DoctorUpdateController::class, 'store'])->name('admin.doctors.store');
 
     Route::delete('/admin/doctors/{id}', [DashboardContoller::class, 'destroyDoctor'])->name('admin.doctors.destroy');
 
