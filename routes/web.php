@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AppointmentController;
 use App\Http\Controllers\Admin\DashboardContoller;
 use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\PatientController;
@@ -48,13 +49,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::post('/admin/patients', [PatientController::class, 'store'])->name('admin.patients.store');
 
-    Route::delete('/admin/patients/{id}', [PatientController::class, 'destroyPatient'])->name('admin.patient.destroy');
+    Route::delete('/admin/patients/{id}', [PatientController::class, 'destroyPatient'])->name('admin.patients.destroy');
 
     Route::get('/admin/patients/{id}/edit', [PatientController::class, 'editPatient'])->name('admin.patients.edit');
 
     Route::put('/admin/patients/{id}', [PatientController::class, 'update'])->name('admin.patients.update');
-
-
 
     // Doctor CRUD routes
     Route::get('/admin/doctors/create', [DoctorController::class, 'create'])->name('admin.doctors.create');
@@ -66,5 +65,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/doctors/{id}/edit', [DoctorController::class, 'editDoctor'])->name('admin.doctors.edit');
 
     Route::put('/admin/doctors/{id}', [DoctorController::class, 'update'])->name('admin.doctors.update');
+
+    // Appointment CRUD routes
+    Route::get('/admin/appointments/create', [AppointmentController::class, 'create'])->name('admin.appointments.create');
+
+    Route::post('/admin/appointments', [AppointmentController::class, 'store'])->name('admin.appointments.store');
+
+    Route::delete('/admin/appointments/{id}', [AppointmentController::class, 'destroyAppointment'])->name('admin.appointments.destroy');
+
+    Route::get('/admin/appointments/{id}/edit', [AppointmentController::class, 'editAppointment'])->name('admin.appointments.edit');
+
+    Route::put('/admin/appointments/{id}', [AppointmentController::class, 'update'])->name('admin.appointments.update');
 });
 // Routes for the doctor

@@ -24,7 +24,7 @@
                 value="{{ old('last_name', $patient->user->last_name ?? '') }}" required class="border p-2 rounded w-full">
 
             <input type="email" name="email" placeholder="Email" value="{{ old('email', $patient->user->email ?? '') }}"
-                required class="border p-2 rounded w-full">
+                class="border p-2 rounded w-full">
 
             <input type="text" name="phone_number" placeholder="Numer telefonu"
                 value="{{ old('phone_number', $patient->phone_number ?? '') }}" class="border p-2 rounded w-full">

@@ -10,16 +10,25 @@ class Transaction extends Model
     use HasFactory;
 
     protected $table = 'transactions';
+
     protected $fillable = [
-        'doctor_id',
-        'patient_id',
-        'appointment_date',
+        'appointment_id',
+        'amount',
         'status',
-        'notes',
+        'payment_date',
     ];
 
     public function appointment()
     {
         return $this->belongsTo(Appointment::class);
+    }
+    public function doctor()
+    {
+        return $this->appointment->doctor;
+    }
+
+    public function patient()
+    {
+        return $this->appointment->patient();
     }
 }

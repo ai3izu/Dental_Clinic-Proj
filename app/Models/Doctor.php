@@ -16,6 +16,7 @@ class Doctor extends Model
         'specialization',
         'phone_number',
         'photo_url',
+        'photo_alt',
         'description',
     ];
 
