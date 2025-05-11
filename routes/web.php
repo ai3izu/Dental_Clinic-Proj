@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AppointmentController;
 use App\Http\Controllers\Admin\DashboardContoller;
 use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\PatientController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Patient\ProfileCompletion;
 use Illuminate\Support\Facades\Route;
@@ -46,7 +47,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // Patient CRUD routes
     Route::get('/admin/patients/create', [PatientController::class, 'create'])->name('admin.patients.create');
-
     Route::post('/admin/patients', [PatientController::class, 'store'])->name('admin.patients.store');
 
     Route::delete('/admin/patients/{id}', [PatientController::class, 'destroyPatient'])->name('admin.patients.destroy');
@@ -76,5 +76,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/appointments/{id}/edit', [AppointmentController::class, 'editAppointment'])->name('admin.appointments.edit');
 
     Route::put('/admin/appointments/{id}', [AppointmentController::class, 'update'])->name('admin.appointments.update');
+
+    // Review CRUD routes
+    Route::get('/admin/reviews/create', [ReviewController::class, 'create'])->name('admin.reviews.create');
+
+    Route::post('/admin/reviews', [ReviewController::class, 'store'])->name('admin.reviews.store');
+
+    Route::delete('/admin/reviews/{id}', [ReviewController::class, 'destroyReview'])->name('admin.reviews.destroy');
+
+    Route::get('/admin/reviews/{id}/edit', [ReviewController::class, 'editReview'])->name('admin.reviews.edit');
+
+    Route::put('/admin/reviews/{id}', [ReviewController::class, 'update'])->name('admin.reviews.update');
 });
 // Routes for the doctor

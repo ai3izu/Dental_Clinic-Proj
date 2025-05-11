@@ -1,7 +1,6 @@
 <div x-data="{ tab: '{{ request()->get('tab', 'patients') }}', searchQuery: '{{ request()->get('search', '') }}' }">
-    <!-- Zakładki -->
     <div class="flex flex-wrap items-center justify-between space-y-2 md:space-y-0">
-        <!-- Lewa część: zakładki -->
+        <!-- sekcja z zakladkami -->
         <div class="flex flex-wrap items-center space-x-2">
             <div class="flex space-x-2">
                 <a :href="`{{ route('admin.dashboard', ['tab' => 'patients', 'page' => 1]) }}`"
@@ -19,6 +18,11 @@
                    class="px-4 py-2 rounded-lg bg-gray-200 text-[#13293D] font-semibold">
                     Wizyty
                 </a>
+                <a :href="`{{ route('admin.dashboard', ['tab' => 'reviews', 'page' => 1]) }}&search=${searchQuery}`"
+                    :class="{ 'bg-[#3E92CC] text-white': tab === 'reviews' }"
+                    class="px-4 py-2 rounded-lg bg-gray-200 text-[#13293D] font-semibold">
+                     Opinie
+                 </a>
                 <a :href="`{{ route('admin.dashboard', ['tab' => 'stats', 'page' => 1]) }}&search=${searchQuery}`"
                    :class="{ 'bg-[#3E92CC] text-white': tab === 'stats' }"
                    class="px-4 py-2 rounded-lg bg-gray-200 text-[#13293D] font-semibold">
@@ -27,7 +31,7 @@
             </div>
         </div>
 
-        <!-- Prawa część: przycisk Dodaj -->
+        <!-- sekcja z przyciskami do dodawania-->
         <div>
             <template x-if="tab === 'patients'">
                 <a href="{{ route('admin.patients.create') }}"
@@ -47,10 +51,16 @@
                     Dodaj nową wizytę
                 </a>
             </template>
+            <template x-if="tab === 'reviews'">
+                <a href="{{ route('admin.reviews.create')}}"
+                   class="px-4 py-2 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600">
+                    Dodaj nową opinię
+                </a>
+            </template>
         </div>
     </div>
 
-    <!-- Formularz wyszukiwania -->
+    <!-- sreachbar -->
     <div class="my-4">
         <form action="{{ route('admin.dashboard') }}" method="GET" class="flex space-x-2">
             <input type="text" name="search" x-model="searchQuery" placeholder="Szukaj..."
@@ -60,7 +70,7 @@
         </form>
     </div>
 
-    <!-- Pacjenci -->
+    <!-- zakladka z pacjentami -->
     <div x-show="tab === 'patients'" x-cloak class="bg-[#EAF6FF] p-4 rounded-lg shadow overflow-auto">
         <h4 class="font-semibold text-[#13293D] mb-4">Pacjenci</h4>
         <table class="min-w-full text-sm text-[#13293D] border mb-4">
@@ -100,7 +110,7 @@
         @endif
     </div>
 
-    <!-- Dentyści -->
+    <!-- zakladka z dentystami -->
     <div x-show="tab === 'doctors'" x-cloak class="bg-[#EAF6FF] p-4 rounded-lg shadow overflow-auto">
         <h4 class="font-semibold text-[#13293D] mb-4">Dentyści</h4>
         <table class="min-w-full text-sm text-[#13293D] border mb-4">
@@ -138,7 +148,7 @@
         @endif
     </div>
 
-    <!-- Wizyty -->
+    <!-- zakladka z wizytami  -->
     <div x-show="tab === 'appointments'" x-cloak class="bg-[#EAF6FF] p-4 rounded-lg shadow overflow-auto">
         <h4 class="font-semibold text-[#13293D] mb-4">Wizyty</h4>
         <table class="min-w-full text-sm text-[#13293D] border mb-4">
@@ -186,7 +196,47 @@
         @endif
     </div>
 
-    <!-- Statystyki -->
+    <!-- zakladka z opiniami  -->
+    <div x-show="tab === 'reviews'" x-cloak class="bg-[#EAF6FF] p-4 rounded-lg shadow overflow-auto">
+        <h4 class="font-semibold text-[#13293D] mb-4">Opinie</h4>
+        <table class="min-w-full text-sm text-[#13293D] border mb-4">
+            <thead class="bg-[#3E92CC] text-white">
+                <tr>
+                    <th class="py-2 px-4 text-left">Imię Pacjenta</th>
+                    <th class="py-2 px-4 text-left">Nazwisko Pacjenta</th>
+                    <th class="py-2 px-4 text-left">Treść opinii</th>
+                    <th class="py-2 px-4 text-left">Dentysta</th>
+                    <th class="py-2 px-4 text-left">Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($reviews ?? [] as $review)
+                    <tr class="border-b">
+                        <td class="py-2 px-4">{{ $review->patient->user->first_name }}</td>
+                        <td class="py-2 px-4">{{ $review->patient->user->last_name }}</td>
+                        <td class="py-2 px-4">{{ $review->content  }}</td>
+                        <td class="py-2 px-4">{{ $review->doctor->user->first_name }} {{ $review->doctor->user->last_name }}</td>
+                        <td class="py-2 px-4">
+                            <a href="{{ route('admin.reviews.edit', $review->id) }}" class="text-blue-500 ml-4">Edytuj</a>
+                            <form action="{{ route('admin.reviews.destroy', $review->id) }}" method="POST" style="display: inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-500 ml-4" onclick="return confirm('Czy na pewno chcesz usunąć tą opinię??')">Usuń</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        @if ($reviews)
+            <div>
+                {{ $reviews->appends(['tab' => 'reviews', 'search' => request()->get('search')])->links() }}
+            </div>
+        @endif
+    </div>
+
+    <!-- statystyki - dodac jscharts -->
     <div x-show="tab === 'stats'" x-cloak class="bg-[#EAF6FF] p-4 rounded-lg shadow">
         <h4 class="font-semibold text-[#13293D] mb-4">Statystyki systemu</h4>
         <canvas id="statsChart" width="400" height="200"></canvas>
