@@ -56,7 +56,6 @@ class AuthController
             'role' => 'patient',
         ]);
 
-        // Create a new patient record associated with the user
         Patient::create([
             'user_id' => $user->id,
         ]);
@@ -64,8 +63,6 @@ class AuthController
         Auth::login($user);
         $request->session()->regenerate();
 
-        // Only patients are begin registered by default
-        // Redirect to the patient dashboard
         return redirect()->route('patient.complete-profile');
     }
 }

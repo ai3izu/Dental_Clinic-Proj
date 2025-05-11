@@ -26,8 +26,8 @@
                 </div>
             </div>
             <div class="mt-16 max-w-5xl mx-auto">
-                <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
-                    alt="Dentysta pracujący z pacjentem" class="rounded-xl shadow-2xl border-8 border-white">
+                <img src="{{ asset('images/banner1.jpg') }}" alt="Dentysta pracujący z pacjentem"
+                    class="rounded-xl shadow-2xl border-8 border-white">
             </div>
         </div>
     </section>
@@ -93,8 +93,8 @@
                 <!-- Doctor 1 -->
                 <div
                     class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-2">
-                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-                        alt="Dr Jan Kowalski" class="w-32 h-32 rounded-full object-cover mx-auto mb-6">
+                    <img src="{{ asset('images/doctor1.jpg') }}" alt="Dr Jan Kowalski"
+                        class="w-32 h-32 rounded-full object-cover mx-auto mb-6">
                     <h3 class="font-semibold text-xl mb-1 text-center text-primaryDark">Dr Jan Kowalski</h3>
                     <p class="text-gray-500 text-center mb-4">Stomatolog ogólny, Implantolog</p>
                     <p class="text-gray-600 mb-6">
@@ -109,8 +109,8 @@
                 <!-- Doctor 2 -->
                 <div
                     class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-2">
-                    <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-                        alt="Dr Anna Nowak" class="w-32 h-32 rounded-full object-cover mx-auto mb-6">
+                    <img src="{{ asset('images/doctor2.jpg') }}" alt="Dr Anna Nowak"
+                        class="w-32 h-32 rounded-full object-cover mx-auto mb-6">
                     <h3 class="font-semibold text-xl mb-1 text-center text-primaryDark">Dr Anna Nowak</h3>
                     <p class="text-gray-500 text-center mb-4">Ortodonta</p>
                     <p class="text-gray-600 mb-6">
@@ -126,9 +126,9 @@
                 <!-- Doctor 3 -->
                 <div
                     class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-2">
-                    <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-                        alt="Dr Piotr Wiśniewski" class="w-32 h-32 rounded-full object-cover mx-auto mb-6">
-                    <h3 class="font-semibold text-xl mb-1 text-center text-primaryDark">Dr Jason Luv</h3>
+                    <img src="{{ asset('images/doctor3.jpg') }}" alt="Dr Piotr Wiśniewski"
+                        class="w-32 h-32 rounded-full object-cover mx-auto mb-6">
+                    <h3 class="font-semibold text-xl mb-1 text-center text-primaryDark">Dr Agnieszka Rak</h3>
                     <p class="text-gray-500 text-center mb-4">Chirurg stomatologiczny</p>
                     <p class="text-gray-600 mb-6">
                         Specjalista chirurgii stomatologicznej i szczękowo-twarzowej. Wykonuje skomplikowane zabiegi

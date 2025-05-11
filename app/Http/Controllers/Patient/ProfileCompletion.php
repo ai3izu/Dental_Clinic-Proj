@@ -7,12 +7,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileCompletion
 {
-     public function show()
+    public function show()
     {
         $patient = Auth::user()->patient;
         return view('patient.complete-profile', compact('patient'));
     }
-
 
     public function update(Request $request)
     {

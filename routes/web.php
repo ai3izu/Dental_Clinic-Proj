@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardContoller;
 use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Patient\ProfileCompletion;
 use Illuminate\Support\Facades\Route;
@@ -87,5 +88,17 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/reviews/{id}/edit', [ReviewController::class, 'editReview'])->name('admin.reviews.edit');
 
     Route::put('/admin/reviews/{id}', [ReviewController::class, 'update'])->name('admin.reviews.update');
+
+    // Transaction CRUD routes
+    Route::get('/admin/transactions/create', [TransactionController::class, 'create'])->name('admin.transactions.create');
+
+    Route::post('/admin/transactions', [TransactionController::class, 'store'])->name('admin.transactions.store');
+
+    Route::delete('/admin/transactions/{id}', [TransactionController::class, 'destroyTransaction'])->name('admin.transactions.destroy');
+
+    Route::get('/admin/transactions/{id}/edit', [TransactionController::class, 'editTransatcion'])->name('admin.transactions.edit');
+
+    Route::put('/admin/transactions/{id}', [TransactionController::class, 'update'])->name('admin.transactions.update');
 });
+
 // Routes for the doctor

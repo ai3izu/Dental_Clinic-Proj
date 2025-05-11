@@ -6,6 +6,7 @@ use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\Review;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class DashboardContoller
@@ -19,8 +20,9 @@ class DashboardContoller
         $doctors = $tab === 'doctors' ? $this->getDoctors($search) : null;
         $appointments = $tab === 'appointments' ? $this->getAppointments($search) : null;
         $reviews = $tab === 'reviews' ? $this->getReviews($search) : null;
+        $transactions = $tab === 'transactions' ? $this->getTransactions($search) : null;
 
-        return view('dashboard', compact('patients', 'doctors', 'appointments', 'reviews', 'tab'));
+        return view('dashboard', compact('patients', 'doctors', 'appointments', 'reviews', 'transactions', 'tab'));
     }
 
     private function getPatients($search)
@@ -78,6 +80,23 @@ class DashboardContoller
                         $subQ->where('first_name', 'like', "%$search%")
                             ->orWhere('last_name', 'like', "%$search%");
                     });
+                });
+            })
+            ->paginate(20);
+    }
+
+    private function getTransactions($search)
+    {
+        return Transaction::with(['appointment.doctor.user', 'appointment.patient.user'])
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->whereHas('appointment.doctor.user', function ($subQ) use ($search) {
+                        $subQ->where('first_name', 'like', "%$search%")
+                            ->orWhere('last_name', 'like', "%$search%");
+                    })->orWhereHas('appointment.patient.user', function ($subQ) use ($search) {
+                        $subQ->where('first_name', 'like', "%$search%")
+                            ->orWhere('last_name', 'like', "%$search%");
+                    })->orWhereDate('payment_date', $search);
                 });
             })
             ->paginate(20);

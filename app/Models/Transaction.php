@@ -22,13 +22,13 @@ class Transaction extends Model
     {
         return $this->belongsTo(Appointment::class);
     }
-    public function doctor()
+    public function getDoctorAttribute()
     {
-        return $this->appointment->doctor;
+        return $this->appointment?->doctor;
     }
 
-    public function patient()
+    public function getPatientAttribute()
     {
-        return $this->appointment->patient();
+        return $this->appointment?->patient;
     }
 }

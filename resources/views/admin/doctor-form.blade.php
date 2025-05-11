@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+    {{-- container na wszystko --}}
     <div
         class="bg-[#EAF6FF] p-4 sm:p-5 md:p-6 rounded-2xl shadow max-w-full sm:max-w-xl md:max-w-2xl mx-auto my-8 sm:my-10 md:my-12">
         <h2 class="text-xl sm:text-2xl font-bold text-[#13293D] mb-5 sm:mb-6">
             {{ isset($doctor) ? 'Edytuj dentystę' : 'Dodaj nowego dentystę' }}
         </h2>
-
+        {{-- komunikaty o błedach --}}
         @if ($errors->any())
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
                 <ul>
@@ -17,6 +18,7 @@
             </div>
         @endif
 
+        {{-- caly formularz --}}
         <form method="POST"
             action="{{ isset($doctor) ? route('admin.doctors.update', $doctor->id) : route('admin.doctors.store') }}"
             class="space-y-4">
@@ -26,6 +28,7 @@
                 @method('PUT')
             @endif
 
+            {{-- dane lekarza imie itd --}}
             <input type="text" name="first_name" placeholder="Imię"
                 value="{{ old('first_name', $doctor->user->first_name ?? '') }}" required class="border p-2 rounded w-full">
 
@@ -50,6 +53,7 @@
             <input type="text" name="apartment_number" placeholder="Opis kariery zawodowej"
                 value="{{ old('description', $doctor->description ?? '') }}" class="border p-2 rounded w-full">
 
+            {{-- przyciski --}}
             <div class="pt-3 flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-2 sm:space-y-0">
                 <button type="submit"
                     class="bg-[#3E92CC] hover:bg-[#2f6ea3] text-white font-semibold px-5 py-2 rounded-lg shadow text-sm sm:text-base">
