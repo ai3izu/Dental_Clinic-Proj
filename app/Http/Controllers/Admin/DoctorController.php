@@ -77,4 +77,26 @@ class DoctorController
 
         return redirect()->route('admin.dashboard', ['tab' => 'doctors'])->with('success', 'Pacjent dodany pomyślnie');
     }
+
+    public function publicIndex()
+    {
+        dd("DoctorController::publicIndex() została wywołana!");
+        $doctors = Doctor::with('user')
+            ->whereHas('user', function ($query) {
+                $query->where('role', 'doctor');
+            })
+            ->get()
+            ->map(function ($doctor) {
+                return [
+                    'id' => $doctor->id,
+                    'first_name' => $doctor->user->first_name,
+                    'last_name' => $doctor->user->last_name,
+                    'specialization' => $doctor->specialization,
+                    'photo_url' => $doctor->photo_url,
+                    'description' => $doctor->description,
+                ];
+            });
+
+        return view('public.doctors', compact('doctors'));
+    }
 }

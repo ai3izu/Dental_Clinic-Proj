@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Patient\AppointmentReservationController;
+use App\Http\Controllers\Public\DoctorListController;
 use App\Http\Controllers\Patient\ProfileCompletion;
 use Illuminate\Support\Facades\Route;
 
@@ -29,9 +31,12 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/doctors', [DoctorListController::class, 'index'])->name('doctors.public');
+
+
 // Routes for the patient
 Route::middleware(['auth', 'role:patient'])->group(function () {
-    // Get the patient completion form view, post the data and return exclusive view for patient
+
     Route::get('/patient/complete-profile', [ProfileCompletion::class, 'show'])->name('patient.complete-profile');
 
     Route::post('/patient/complete-profile', [ProfileCompletion::class, 'update'])->name('patient.complete-profile.update');
@@ -39,6 +44,10 @@ Route::middleware(['auth', 'role:patient'])->group(function () {
     Route::get('/patient', function () {
         return view('dashboard');
     })->name('patient.dashboard');
+
+    // Apoitment reservation
+    Route::get('/appoitment/book/{doctor}', [AppointmentReservationController::class, 'create'])->name('patient.appoitment.create');
+    Route::post('/appoitment/book', [AppointmentReservationController::class, 'store'])->name('patient.appoitment.store');
 });
 
 // Routes for the admin 
