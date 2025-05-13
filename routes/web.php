@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Patient\AppointmentReservationController;
+use App\Http\Controllers\Patient\PatientDashboardController;
 use App\Http\Controllers\Public\DoctorListController;
 use App\Http\Controllers\Patient\ProfileCompletion;
 use Illuminate\Support\Facades\Route;
@@ -41,13 +42,13 @@ Route::middleware(['auth', 'role:patient'])->group(function () {
 
     Route::post('/patient/complete-profile', [ProfileCompletion::class, 'update'])->name('patient.complete-profile.update');
 
-    Route::get('/patient', function () {
-        return view('dashboard');
-    })->name('patient.dashboard');
+    Route::get('/patient', [PatientDashboardController::class, 'index'])->name('patient.dashboard');
 
-    // Apoitment reservation
+    // Appointmens
     Route::get('/appoitment/book/{doctor}', [AppointmentReservationController::class, 'create'])->name('patient.appoitment.create');
     Route::post('/appoitment/book', [AppointmentReservationController::class, 'store'])->name('patient.appoitment.store');
+    Route::post('/appointment/{appointment}/pay', [PatientDashboardController::class, 'pay'])->name('patient.appointment.pay');
+    Route::post('/appointment/{appointment}/cancel', [PatientDashboardController::class, 'cancel'])->name('patient.appointment.cancel');
 });
 
 // Routes for the admin 

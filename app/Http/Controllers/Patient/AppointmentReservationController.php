@@ -15,7 +15,7 @@ class AppointmentReservationController
     {
         $today = Carbon::today()->hour(9)->minute(0);
         $end = Carbon::today()->hour(17)->minute(0);
-        $allSlots = CarbonPeriod::create($today, '30 minutes', $end)->toArray();
+        $allSlots = CarbonPeriod::create($today, '60 minutes', $end)->toArray();
 
         $takenSlots = Appointment::where('doctor_id', $doctor->id)
             ->whereDate('appointment_date', Carbon::today())

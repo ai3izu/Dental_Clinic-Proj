@@ -25,10 +25,6 @@
                     </a>
                 </div>
             </div>
-            <div class="mt-16 max-w-5xl mx-auto">
-                <img src="{{ asset('images/banner1.jpg') }}" alt="Dentysta pracujący z pacjentem"
-                    class="rounded-xl shadow-2xl border-8 border-white">
-            </div>
         </div>
     </section>
 
