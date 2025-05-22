@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Doctor\DoctorDashboardController;
 use App\Http\Controllers\Patient\AppointmentReservationController;
 use App\Http\Controllers\Patient\PatientDashboardController;
 use App\Http\Controllers\Public\DoctorListController;
@@ -112,3 +113,24 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 // Routes for the doctor
+Route::middleware(['auth', 'role:doctor'])->prefix('doctor')->name('doctor.')->group(function () {
+
+    // dashboard
+    Route::get('/dashboard', [DoctorDashboardController::class, 'dashboard'])->name('dashboard');
+
+    // confirm appointpent
+    Route::post('/appointment/{appointment}/confirm', [DoctorDashboardController::class, 'confirmAppointment'])->name('appointment.confirm');
+
+    // cancel appoinpent
+    Route::post('/appointment/{appointment}/cancel', [DoctorDashboardController::class, 'cancelAppointment'])->name('appointment.cancel');
+
+    // restore appointment
+    Route::post('/appointment/{appointment}/restore', [DoctorDashboardController::class, 'restoreAppointment'])->name('appointment.restore');
+
+    // appointment date change
+    Route::post('/appointment/{appointment}/reschedule', [DoctorDashboardController::class, 'rescheduleAppointment'])->name('appointment.reschedule');
+
+    // notes for appointment
+    Route::get('/notes/{appointment}', [DoctorDashboardController::class, 'showNotesForm'])->name('notes.form');
+    Route::post('/appointments/{appointment}/notes', [DoctorDashboardController::class, 'addNotes'])->name('appointments.notes');
+});

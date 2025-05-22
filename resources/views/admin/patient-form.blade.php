@@ -25,7 +25,7 @@
             class="space-y-4">
 
             @csrf
-            @if(isset($patient))
+            @if (isset($patient))
                 @method('PUT')
             @endif
 
