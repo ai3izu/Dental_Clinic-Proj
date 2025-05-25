@@ -22,7 +22,7 @@ class UpdateDoctorRequest extends FormRequest
      */
     public function rules(): array
     {
-        $doctorId = $this->route('id');
+        $doctorId = $this->route('doctor');
         $userId = Doctor::findOrFail($doctorId)->user_id;
 
         return [

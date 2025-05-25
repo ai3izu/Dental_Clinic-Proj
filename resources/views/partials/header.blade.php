@@ -1,7 +1,7 @@
 <nav x-data="{ open: false }" class="bg-white shadow-lg sticky top-0 z-50">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-3 md:py-4">
-            <!-- Logo -->
+            <!-- logo -->
             <div class="flex items-center space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 lg:h-8 lg:w-8 text-primary" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor">
@@ -14,7 +14,7 @@
                 </span>
             </div>
 
-            <!-- Menu desktop -->
+            <!-- menu desktop -->
             <div class="hidden lg:flex justify-center flex-1 items-center space-x-6">
                 <a href="{{ route('landing') }}#doctors"
                     class="text-primaryDark hover:text-primary transition text-sm lg:text-base">Lekarze</a>
@@ -26,7 +26,7 @@
                     class="text-primaryDark hover:text-primary transition text-sm lg:text-base">FAQ</a>
             </div>
 
-            <!-- Buttons desktop -->
+            <!-- btns desktop -->
             <div class="hidden lg:flex items-center space-x-6">
                 @auth
                     @if (Auth::user()->role === 'admin')
@@ -54,7 +54,7 @@
                 @endauth
             </div>
 
-            <!-- Hamburger button -->
+            <!-- hamburger btn -->
             <div class="lg:hidden flex items-center">
                 <button @click="open = !open" class="text-primaryDark focus:outline-none">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -65,7 +65,7 @@
             </div>
         </div>
 
-        <!-- Mobile menu -->
+        <!-- menu mobile -->
         <div x-show="open" @click.outside="open = false" x-transition.duration.200ms class="lg:hidden pb-3">
             <div class="flex flex-col space-y-3">
                 <a href="{{ route('landing') }}#doctors"

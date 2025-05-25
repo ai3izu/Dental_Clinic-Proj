@@ -1,32 +1,28 @@
 <div x-data="{ tab: 'upcoming' }" class="flex flex-col gap-4">
-    <!-- Zakładki -->
+    <!-- zakladi -->
     <div class="flex flex-col md:flex-row gap-2">
         <div class="flex flex-wrap sm:flex-column gap-2">
-            <button @click="tab = 'upcoming'"
-                :class="tab === 'upcoming' ? 'bg-[#3E92CC] text-white' : 'bg-gray-200 text-[#13293D]'"
-                class="px-4 py-2 text-sm md:text-base rounded-lg font-semibold">
+            <!-- nadchodzace wizyty -->
+            <button @click="tab = 'upcoming'" :class="tab === 'upcoming' ? 'bg-[#3E92CC] text-white' : 'bg-gray-200 text-[#13293D]'" class="px-4 py-2 text-sm md:text-base rounded-lg font-semibold">
                 Moje wizyty
             </button>
-            <button @click="tab = 'completed'"
-                :class="tab === 'completed' ? 'bg-[#3E92CC] text-white' : 'bg-gray-200 text-[#13293D]'"
-                class="px-4 py-2 text-sm md:text-base rounded-lg font-semibold">
+            <!-- zakonczone wizyty -->
+            <button @click="tab = 'completed'" :class="tab === 'completed' ? 'bg-[#3E92CC] text-white' : 'bg-gray-200 text-[#13293D]'" class="px-4 py-2 text-sm md:text-base rounded-lg font-semibold">
                 Odbyte wizyty
             </button>
-            <button @click="tab = 'canceled'"
-                :class="tab === 'canceled' ? 'bg-[#3E92CC] text-white' : 'bg-gray-200 text-[#13293D]'"
-                class="px-4 py-2 text-sm md:text-base rounded-lg font-semibold">
+            <!-- anulowane wizyty -->
+            <button @click="tab = 'canceled'" :class="tab === 'canceled' ? 'bg-[#3E92CC] text-white' : 'bg-gray-200 text-[#13293D]'" class="px-4 py-2 text-sm md:text-base rounded-lg font-semibold">
                 Anulowane wizyty
             </button>
         </div>
-        <!-- Przycisk Umów wizytę -->
+        <!-- umawianie wizyty -->
         <a href="{{ route('doctors.public') }}"
             class="md:ml-auto bg-[#3E92CC] text-white px-4 py-2 rounded-lg font-semibold text-sm md:text-base">
             Umów wizytę
         </a>
     </div>
 
-    <!-- Reszta kodu pozostaje bez zmian -->
-    <!-- Moje wizyty -->
+    <!-- moje wizyty -->
     <div x-show="tab === 'upcoming'" x-cloak class="bg-[#EAF6FF] p-4 rounded-lg shadow space-y-4">
         <h4 class="font-semibold text-[#13293D] mb-4">Zaplanowane wizyty</h4>
 
@@ -38,28 +34,35 @@
                 </h4>
                 <p class="text-gray-700">Typ wizyty: {{ ucfirst(__($appointment->visit_type)) }}</p>
                 <p class="text-gray-600">Data:
-                    {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d.m.Y H:i') }}</p>
+                    {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d.m.Y H:i') }}
+                </p>
                 @if (optional($appointment->transaction)->status !== 'paid')
                     <p class="text-sm text-red-700 font-medium mt-1">Wizyta nieopłacona</p>
                 @endif
 
-                <!-- Przycisk Opłać i Anuluj tylko dla wizyt, które nie są anulowane ani zakończone -->
+                <!-- przycisk dla wizyt ktore nie sa anulowane ani zakonczone -->
                 @if ($appointment->status !== 'canceled' && $appointment->status !== 'completed')
                     <div class="mt-4 flex flex-col sm:flex-row gap-4">
-                        <!-- Przycisk "Opłać" zmienia status na 'paid' -->
-                        <form action="{{ route('patient.appointment.pay', $appointment->id) }}" method="POST">
-                            @csrf
-                            <button type="submit"
-                                class="w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600">
-                                Opłać wizytę
+                        @if (!$appointment->isPaid())
+                            <form action="{{ route('patient.appointment.pay', $appointment->id) }}" method="POST">
+                                @csrf
+                                <button type="submit"
+                                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 text-sm md:text-base rounded-lg font-semibold w-full sm:w-auto">
+                                    Opłać wizytę
+                                </button>
+                            </form>
+                        @else
+                            <button disabled
+                                class="bg-gray-300 text-gray-600 px-4 py-2 text-sm md:text-base rounded-lg font-semibold w-full sm:w-auto cursor-not-allowed">
+                                Wizyta opłacona
                             </button>
-                        </form>
 
-                        <!-- Przycisk "Anuluj" zmienia status na 'canceled' -->
+                        @endif
+
                         <form action="{{ route('patient.appointment.cancel', $appointment->id) }}" method="POST">
                             @csrf
                             <button type="submit"
-                                class="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600">
+                                class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 text-sm md:text-base rounded-lg font-semibold w-full sm:w-auto">
                                 Anuluj wizytę
                             </button>
                         </form>
@@ -71,6 +74,7 @@
         @endforelse
     </div>
 
+    <!-- zakonczone / odbyte wizyty -->
     <div x-show="tab === 'completed'" x-cloak class="bg-green-50 p-4 rounded-lg shadow space-y-4">
         <h4 class="font-semibold text-[#13293D] mb-4">Odbyte wizyty</h4>
 
@@ -81,7 +85,8 @@
                 </h4>
                 <p class="text-gray-700">Typ wizyty: {{ ucfirst(__($appointment->visit_type)) }}</p>
                 <p class="text-gray-600">Data:
-                    {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d.m.Y H:i') }}</p>
+                    {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d.m.Y H:i') }}
+                </p>
                 <p class="text-sm text-green-700 font-medium mt-1">Wizyta opłacona</p>
             </div>
         @empty
@@ -89,7 +94,7 @@
         @endforelse
     </div>
 
-    <!-- Anulowane wizyty -->
+    <!-- anulowane wizyty -->
     <div x-show="tab === 'canceled'" x-cloak class="bg-yellow-50 p-4 rounded-lg shadow space-y-4">
         <h4 class="font-semibold text-[#13293D] mb-4">Anulowane wizyty</h4>
 
@@ -100,7 +105,8 @@
                 </h4>
                 <p class="text-gray-700">Typ wizyty: {{ ucfirst(__($appointment->visit_type)) }}</p>
                 <p class="text-gray-600">Data:
-                    {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d.m.Y H:i') }}</p>
+                    {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d.m.Y H:i') }}
+                </p>
                 <p class="text-sm text-yellow-700 font-medium mt-1">Wizyta anulowana</p>
             </div>
         @empty

@@ -7,64 +7,21 @@ use App\Http\Requests\UpdatePatientRequest;
 use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class PatientController
 {
-
-    public function editPatient($id)
+    public function index()
     {
-        $patient = Patient::findOrFail($id);
-        return view('admin.patient-form', compact('patient'));
-    }
-
-    public function destroyPatient($id)
-    {
-        $patient = Patient::findOrFail($id);
-        $patient->delete();
-        $patient->user()->delete();
-
-
+        // Tymczasowo wyłącz przekierowanie dla testów
+        // $patients = Patient::paginate(20);
+        // return view('admin.patients.index', compact('patients'));
         return redirect()->route('admin.dashboard', ['tab' => 'patients']);
-    }
-
-    public function update(UpdatePatientRequest $request, $id)
-    {
-        $patient = Patient::findOrFail($id);
-        $validated = $request->validated();
-
-        $userData = [
-            'first_name' => $validated['first_name'] ?? $patient->user->first_name,
-            'last_name' => $validated['last_name'] ?? $patient->user->last_name,
-        ];
-
-        if (isset($validated['email'])) {
-            $userData['email'] = $validated['email'];
-        }
-
-        $patient->user->update($userData);
-
-        $patient->update([
-            'phone_number' => $validated['phone_number'] ?? $patient->phone_number,
-            'postal_code' => $validated['postal_code'] ?? $patient->postal_code,
-            'city' => $validated['city'] ?? $patient->city,
-            'street' => $validated['street'] ?? $patient->street,
-            'apartment_number' => $validated['apartment_number'] ?? $patient->apartment_number,
-            'staircase_number' => $validated['staircase_number'] ?? $patient->staircase_number,
-            'birth_date' => $validated['birth_date'] ?? $patient->birth_date,
-        ]);
-
-        return redirect()->route('admin.dashboard', ['tab' => 'patients'])->with('success', 'Dane pacjenta zostały zaktualizowane.');
-    }
-
-    public function create()
-    {
-        return view('admin.patient-form');
     }
 
     public function store(StorePatientRequest $request)
     {
         $validated = $request->validated();
-
 
         $user = User::create([
             'first_name' => $validated['first_name'],
@@ -84,6 +41,54 @@ class PatientController
             'birth_date' => $validated['birth_date'] ?? null,
         ]);
 
-        return redirect()->route('admin.dashboard', ['tab' => 'patients'])->with('success', 'Pacjent dodany pomyślnie');
+        return redirect()->route('admin.dashboard', ['tab' => 'patients'])
+            ->with('success', 'Pacjent dodany pomyślnie');
+    }
+
+    public function edit($id)
+    {
+        $patient = Patient::findOrFail($id);
+        return view('admin.patient-form', compact('patient'));
+    }
+
+    public function update(UpdatePatientRequest $request, $id)
+    {
+        Log::info('Attempting to update patient', ['id' => $id]);
+
+        $patient = Patient::findOrFail($id);
+        Log::info('Found patient:', ['patient' => $patient]);
+
+        $validated = $request->validated();
+        Log::info('Validated data:', $validated);
+
+        $patient->user->update([
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'email' => $validated['email'],
+        ]);
+
+        $patient->update([
+            'phone_number' => $validated['phone_number'],
+            'postal_code' => $validated['postal_code'],
+            'city' => $validated['city'],
+            'street' => $validated['street'],
+            'apartment_number' => $validated['apartment_number'],
+            'staircase_number' => $validated['staircase_number'],
+            'birth_date' => $validated['birth_date'],
+        ]);
+
+        Log::info('Patient updated successfully');
+
+        return redirect()->route('admin.dashboard', ['tab' => 'patients'])
+            ->with('success', 'Dane pacjenta zostały zaktualizowane.');
+    }
+
+    public function destroy(Patient $patient)
+    {
+        $patient->delete();
+        $patient->user()->delete();
+
+        return redirect()->route('admin.dashboard', ['tab' => 'patients'])
+            ->with('success', 'Pacjent został usunięty.');
     }
 }

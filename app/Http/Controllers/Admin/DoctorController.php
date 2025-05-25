@@ -9,13 +9,18 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class DoctorController
+
 {
-    public function editDoctor($id)
+    public function index()
+    {
+        return redirect()->route('admin.dashboard', ['tab' => 'doctors']);
+    }
+    public function edit($id)
     {
         $doctor = Doctor::findOrFail($id);
         return view('admin.doctor-form', compact('doctor'));
     }
-    public function destroyDoctor($id)
+    public function destroy($id)
     {
         $doctor = Doctor::findOrFail($id);
         $doctor->delete();

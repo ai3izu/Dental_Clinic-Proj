@@ -25,7 +25,7 @@ class StoreDoctorRequest extends FormRequest
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'nullable|string|min:8|confirmed',
             'specialization' => 'nullable|string|max:255',
             'phone_number' => 'nullable|string|max:15',
             'photo_url' => 'nullable|url',

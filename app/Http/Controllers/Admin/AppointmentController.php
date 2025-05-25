@@ -11,7 +11,12 @@ use Illuminate\Http\Request;
 
 class AppointmentController
 {
-    public function editAppointment($id)
+    public function index()
+    {
+
+        return redirect()->route('admin.dashboard', ['tab' => 'appointments']);
+    }
+    public function edit($id)
     {
         $appointment = Appointment::with(['doctor.user', 'patient.user'])->findOrFail($id);
         $doctors = Doctor::with('user')->get();
@@ -24,7 +29,7 @@ class AppointmentController
         ]);
     }
 
-    public function destroyAppointment($id)
+    public function destroy($id)
     {
         $appointment = Appointment::findOrFail($id);
         $appointment->delete();

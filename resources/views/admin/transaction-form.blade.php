@@ -35,8 +35,8 @@
                     <option value="">Wybierz wizytę</option>
                     @foreach($appointments as $appointment)
                         <option value="{{ $appointment->id }}" {{ old('appointment_id', $transaction->appointment_id ?? '') == $appointment->id ? 'selected' : '' }}>
-                            {{ $appointment->doctor->user->first_name }} {{ $appointment->doctor->user->last_name }}
-                            — {{ $appointment->patient->user->first_name }} {{ $appointment->patient->user->last_name }}
+                            {{ $appointment->patient->user->first_name }} {{ $appointment->patient->user->last_name }}
+                            — {{ $appointment->doctor->user->first_name }} {{ $appointment->doctor->user->last_name }}
                             ({{ $appointment->appointment_date }})
                         </option>
                     @endforeach

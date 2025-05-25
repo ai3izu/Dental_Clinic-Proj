@@ -9,7 +9,11 @@ use App\Models\Transaction;
 
 class TransactionController
 {
-    public function editTransatcion($id)
+    public function index()
+    {
+        return redirect()->route('admin.dashboard', ['tab' => 'transactions']);
+    }
+    public function edit($id)
     {
         $transaction = Transaction::with('appointment.doctor.user', 'appointment.patient.user')->findOrFail($id);
         $appointments = Appointment::with(['doctor.user', 'patient.user'])->get();
@@ -20,7 +24,7 @@ class TransactionController
         ]);
     }
 
-    public function destroyTransaction($id)
+    public function destroy($id)
     {
         $transaction = Transaction::findOrFail($id);
         $transaction->delete();

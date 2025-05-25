@@ -1,9 +1,9 @@
 <div x-data="{ tab: '{{ request()->get('tab', 'patients') }}', searchQuery: '{{ request()->get('search', '') }}' }">
-    <!-- Kontener główny z lepszym zarządzaniem przestrzenią -->
+    <!-- container -->
     <div class="flex flex-col gap-4">
-        <!-- Sekcja z zakładkami i przyciskami - teraz w kolumnie na mobile -->
+        <!-- zakladki i przyciski-->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <!-- Zakładki - teraz mogą zawijać się w wielu wierszach -->
+            <!-- zakladki  -->
             <div class="flex flex-wrap gap-2">
                 <a :href="`{{ route('admin.dashboard', ['tab' => 'patients', 'page' => 1]) }}`"
                     :class="{ 'bg-[#3E92CC] text-white': tab === 'patients' }"
@@ -32,7 +32,7 @@
                 </a>
             </div>
 
-            <!-- Przyciski dodawania - teraz zawsze pod zakładkami na mobile -->
+            <!-- przyciski dodawania-->
             <div class="flex justify-end">
                 <template x-if="tab === 'patients'">
                     <a href="{{ route('admin.patients.create') }}"
@@ -177,6 +177,8 @@
                         <th class="py-2 px-4 text-left">Pacjent</th>
                         <th class="py-2 px-4 text-left">Dentysta</th>
                         <th class="py-2 px-4 text-left">Status</th>
+                        <th class="py-2 px-4 text-left">Typ wizyty</th>
+                        <th class="py-2 px-4 text-left">Notatki</th>
                         <th class="py-2 px-4 text-left">Akcje</th>
                     </tr>
                 </thead>
@@ -189,6 +191,8 @@
                             <td class="py-2 px-4">{{ $appointment->doctor->user->first_name }}
                                 {{ $appointment->doctor->user->last_name }}</td>
                             <td class="py-2 px-4">{{ $appointment->status }}</td>
+                            <td class="py-2 px-4">{{ $appointment->visit_type }}</td>
+                            <td class="py-2 px-4">{{ $appointment->notes }}</td>
                             <td class="py-2 px-4">
                                 <a href="{{ route('admin.appointments.edit', $appointment->id) }}"
                                     class="text-blue-500 ml-4">Edytuj</a>
@@ -260,6 +264,7 @@
                 <thead class="bg-[#3E92CC] text-white">
                     <tr>
                         <th class="py-2 px-4 text-left">Pacjent</th>
+                        <th class="py-2 px-4 text-left">Zarejestrowany u</th>
                         <th class="py-2 px-4 text-left">Kwota</th>
                         <th class="py-2 px-4 text-left">Status</th>
                         <th class="py-2 px-4 text-left">Data płatności</th>
@@ -271,6 +276,8 @@
                         <tr class="border-b">
                             <td class="py-2 px-4">{{ $transaction->patient->user->first_name }}
                                 {{ $transaction->patient->user->last_name }}</td>
+                            <td class="py-2 px-4">{{ $transaction->appointment->doctor->user->first_name }}
+                                {{ $transaction->appointment->doctor->user->last_name }} {{$transaction->appointment->appointment_date}}</td>
                             <td class="py-2 px-4">{{ $transaction->amount }}</td>
                             <td class="py-2 px-4">{{ $transaction->status }}</td>
                             <td class="py-2 px-4">{{ $transaction->payment_date }}</td>

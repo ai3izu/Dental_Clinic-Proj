@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Patient;
 
 use App\Models\Appointment;
-use App\Models\Doctor;
 use App\Models\Transaction;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PatientDashboardController
@@ -37,10 +35,6 @@ class PatientDashboardController
             $transaction->save();
 
 
-            $appointment->status = 'completed';
-            $appointment->save();
-
-
             return redirect()->route('patient.dashboard')->with('success', 'Wizyta została opłacona.');
         }
 
@@ -50,7 +44,7 @@ class PatientDashboardController
 
     public function cancel(Appointment $appointment)
     {
-        if ($appointment->status !== 'completed' && $appointment->status !== 'paid') {
+        if ($appointment->status !== 'completed' && !$appointment->isPaid()) {
             $appointment->status = 'canceled';
             $appointment->save();
 

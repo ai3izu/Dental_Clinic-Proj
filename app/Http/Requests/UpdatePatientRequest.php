@@ -22,8 +22,9 @@ class UpdatePatientRequest extends FormRequest
      */
     public function rules(): array
     {
-        $patientId = $this->route('id');
-        $userId = Patient::findOrFail($patientId)->user_id;
+        $patientId = $this->route('patient');
+        $patient = Patient::findOrFail($patientId);
+        $userId = $patient->user_id;
 
         return [
             'first_name' => 'sometimes|required|string|max:255',

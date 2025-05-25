@@ -28,12 +28,10 @@
 
             <div>
                 <label for="doctor_id" class="block text-sm font-medium text-gray-700">Lekarz</label>
-                <select name="doctor_id" id="doctor_id" required class="border p-2 rounded w-full"
-                    {{ isset($review) ? 'disabled' : '' }}>
+                <select name="doctor_id" id="doctor_id" required class="border p-2 rounded w-full" {{ isset($review) ? 'disabled' : '' }}>
                     <option value="">Wybierz lekarza</option>
                     @foreach ($doctors as $doctor)
-                        <option value="{{ $doctor->id }}"
-                            {{ old('doctor_id', $review->doctor_id ?? '') == $doctor->id ? 'selected' : '' }}>
+                        <option value="{{ $doctor->id }}" {{ old('doctor_id', $review->doctor_id ?? '') == $doctor->id ? 'selected' : '' }}>
                             {{ $doctor->user->first_name }} {{ $doctor->user->last_name }}
                         </option>
                     @endforeach
@@ -48,12 +46,10 @@
 
             <div>
                 <label for="patient_id" class="block text-sm font-medium text-gray-700">Pacjent</label>
-                <select name="patient_id" id="patient_id" required class="border p-2 rounded w-full"
-                    {{ isset($review) ? 'disabled' : '' }}>
+                <select name="patient_id" id="patient_id" required class="border p-2 rounded w-full" {{ isset($review) ? 'disabled' : '' }}>
                     <option value="">Wybierz pacjenta</option>
                     @foreach ($patients as $patient)
-                        <option value="{{ $patient->id }}"
-                            {{ old('patient_id', $review->patient_id ?? '') == $patient->id ? 'selected' : '' }}>
+                        <option value="{{ $patient->id }}" {{ old('patient_id', $review->patient_id ?? '') == $patient->id ? 'selected' : '' }}>
                             {{ $patient->user->first_name }} {{ $patient->user->last_name }}
                         </option>
                     @endforeach
@@ -68,7 +64,8 @@
 
             <div>
                 <label for="content" class="block text-sm font-medium text-gray-700">Treść opinii</label>
-                <textarea name="content" id="content" class="border p-2 rounded w-full">{{ old('content', $review->content ?? '') }}</textarea>
+                <textarea name="content" id="content"
+                    class="border p-2 rounded w-full">{{ old('content', $review->content ?? '') }}</textarea>
                 @error('content')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror

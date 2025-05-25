@@ -11,7 +11,11 @@ use Illuminate\Http\Request;
 
 class ReviewController
 {
-    public function editReview($id)
+    public function index()
+    {
+        return redirect()->route('admin.dashboard', ['tab' => 'reviews']);
+    }
+    public function edit($id)
     {
         $review = Review::with(['doctor.user', 'patient.user'])->findOrFail($id);
         $doctors = Doctor::with('user')->get();
@@ -24,7 +28,7 @@ class ReviewController
         ]);
     }
 
-    public function destroyReview($id)
+    public function destroy($id)
     {
         $review = Review::findOrFail($id);
         $review->delete();
