@@ -35,7 +35,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/doctors', [DoctorListController::class, 'index'])->name('doctors.public');
 
-
+Route::get('/doctor/appointments/available-slots', [DoctorDashboardController::class, 'getAvailableSlots'])->name('doctor.appointments.available_slots');
 // Routes for the patient
 Route::middleware(['auth', 'role:patient'])->group(function () {
     Route::get('/patient/complete-profile', [ProfileCompletion::class, 'show'])->name('patient.complete-profile');
@@ -47,6 +47,8 @@ Route::middleware(['auth', 'role:patient'])->group(function () {
     Route::post('/appoitment/book', [AppointmentReservationController::class, 'store'])->name('patient.appoitment.store');
     Route::post('/appointment/{appointment}/pay', [PatientDashboardController::class, 'pay'])->name('patient.appointment.pay');
     Route::post('/appointment/{appointment}/cancel', [PatientDashboardController::class, 'cancel'])->name('patient.appointment.cancel');
+
+    Route::get('/patient/appointments/available-slots', [AppointmentReservationController::class, 'getAvailableSlots'])->name('patient.appointments.available_slots');
 });
 
 // Routes for the admin 
@@ -78,6 +80,8 @@ Route::middleware(['auth', 'role:doctor'])->prefix('doctor')->name('doctor.')->g
 
     // appointment date change
     Route::post('/appointment/{appointment}/reschedule', [DoctorDashboardController::class, 'rescheduleAppointment'])->name('appointment.reschedule');
+
+
 
     // notes for appointment
     Route::get('/notes/{appointment}', [DoctorDashboardController::class, 'showNotesForm'])->name('notes.form');

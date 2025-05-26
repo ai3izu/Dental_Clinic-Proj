@@ -45,6 +45,10 @@ class PatientController
             ->with('success', 'Pacjent dodany pomyślnie');
     }
 
+    public function create()
+    {
+        return view('admin.patient-form');
+    }
     public function edit($id)
     {
         $patient = Patient::findOrFail($id);

@@ -25,7 +25,7 @@ class UpdateAppointmentRequest extends FormRequest
             'doctor_id' => 'sometimes|required|exists:doctors,id',
             'patient_id' => 'sometimes|required|exists:patients,id',
             'appointment_date' => 'required|after_or_equal:now',
-            'visit_type' => 'required|string|in:implantology,orthodontics,root_canal',
+            'visit_type' => 'required|string|in:implantology,orthodontics,root_canal,cavity_treatment',
             'status' => 'required|string|in:scheduled,completed,canceled',
             'notes' => 'nullable|string|max:1000',
         ];

@@ -5,12 +5,13 @@
     <div
         class="bg-[#EAF6FF] p-4 sm:p-5 md:p-6 rounded-2xl shadow max-w-full sm:max-w-xl md:max-w-2xl mx-auto my-8 sm:my-10 md:my-12">
         <h2 class="text-xl sm:text-2xl font-bold text-[#13293D] mb-5 sm:mb-6">
-            {{ isset($doctor) ? 'Edytuj dentystę' : 'Dodaj nowego dentystę' }}
+            {{ isset($doctor) ? 'Edytuj dane dentysty' : 'Dodaj nowego dentystę' }}
         </h2>
         {{-- komunikaty o błedach --}}
         @if ($errors->any())
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                <ul>
+                <strong class="font-bold">Wystąpiły błędy!</strong>
+                <ul class="mt-2 list-disc list-inside">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
@@ -21,42 +22,115 @@
         {{-- caly formularz --}}
         <form method="POST"
             action="{{ isset($doctor) ? route('admin.doctors.update', $doctor->id) : route('admin.doctors.store') }}"
-            class="space-y-4">
-
+            class="space-y-5">
             @csrf
-            @if(isset($doctor))
+            @if (isset($doctor))
                 @method('PUT')
             @endif
 
-            {{-- dane lekarza imie itd --}}
-            <input type="text" name="first_name" placeholder="Imię"
-                value="{{ old('first_name', $doctor->user->first_name ?? '') }}" required class="border p-2 rounded w-full">
+            {{-- Imię --}}
+            <div>
+                <label for="first_name" class="block text-sm font-medium text-gray-700">Imię</label>
+                <input type="text" name="first_name" id="first_name" placeholder="np. Jan"
+                    value="{{ old('first_name', $doctor->user->first_name ?? '') }}" required
+                    class="border p-2 rounded w-full mt-1 @error('first_name') border-red-500 @enderror"
+                    aria-describedby="first_name-error" @error('first_name') aria-invalid="true" @enderror>
+                @error('first_name')
+                    <span class="text-red-700 text-sm" id="first_name-error" role="alert">{{ $message }}</span>
+                @enderror
+            </div>
 
-            <input type="text" name="last_name" placeholder="Nazwisko"
-                value="{{ old('last_name', $doctor->user->last_name ?? '') }}" required class="border p-2 rounded w-full">
+            {{-- Nazwisko --}}
+            <div>
+                <label for="last_name" class="block text-sm font-medium text-gray-700">Nazwisko</label>
+                <input type="text" name="last_name" id="last_name" placeholder="np. Kowlaski"
+                    value="{{ old('last_name', $doctor->user->last_name ?? '') }}" required
+                    class="border p-2 rounded w-full mt-1 @error('last_name') border-red-500 @enderror"
+                    aria-describedby="last_name-error" @error('last_name') aria-invalid="true" @enderror>
+                @error('last_name')
+                    <span class="text-red-700 text-sm" id="last_name-error" role="alert">{{ $message }}</span>
+                @enderror
+            </div>
 
-            <input type="email" name="email" placeholder="Email" value="{{ old('email', $doctor->user->email ?? '') }}"
-                required class="border p-2 rounded w-full">
+            {{-- Email --}}
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" name="email" id="email" placeholder="email@example.pl"
+                    value="{{ old('email', $doctor->user->email ?? '') }}" required
+                    class="border p-2 rounded w-full mt-1 @error('email') border-red-500 @enderror"
+                    aria-describedby="email-error" @error('email') aria-invalid="true" @enderror>
+                @error('email')
+                    <span class="text-red-700 text-sm" id="email-error" role="alert">{{ $message }}</span>
+                @enderror
+            </div>
 
-            <input type="text" name="phone_number" placeholder="Numer telefonu"
-                value="{{ old('phone_number', $doctor->phone_number ?? '') }}" class="border p-2 rounded w-full">
+            {{-- Numer telefonu --}}
+            <div>
+                <label for="phone_number" class="block text-sm font-medium text-gray-700">Numer telefonu</label>
+                <input type="tel" name="phone_number" id="phone_number" placeholder="000-000-000"
+                    value="{{ old('phone_number', $doctor->phone_number ?? '') }}"
+                    class="border p-2 rounded w-full mt-1 @error('phone_number') border-red-500 @enderror"
+                    aria-describedby="phone_number-error" @error('phone_number') aria-invalid="true" @enderror>
+                @error('phone_number')
+                    <span class="text-red-700 text-sm" id="phone_number-error" role="alert">{{ $message }}</span>
+                @enderror
+            </div>
 
-            <input name="specialization" placeholder="Specjalizacja"
-                value="{{ old('specialization', $doctor->specialization ?? '') }}" class="border p-2 rounded w-full">
+            {{-- Specjalizacja --}}
+            <div>
+                <label for="specialization" class="block text-sm font-medium text-gray-700">Specjalizacja</label>
+                <input type="text" name="specialization" id="specialization" placeholder="np. Ortodonta"
+                    value="{{ old('specialization', $doctor->specialization ?? '') }}"
+                    class="border p-2 rounded w-full mt-1 @error('specialization') border-red-500 @enderror"
+                    aria-describedby="specialization-error" @error('specialization') aria-invalid="true" @enderror>
+                @error('specialization')
+                    <span class="text-red-700 text-sm" id="specialization-error" role="alert">{{ $message }}</span>
+                @enderror
+            </div>
 
-            <input type="text" name="photo_alt" placeholder="URL zdjęcia"
-                value="{{ old('photo_url', $doctor->photo_url ?? '') }}" class="border p-2 rounded w-full">
+            {{-- URL zdjęcia --}}
+            <div>
+                <label for="photo_url" class="block text-sm font-medium text-gray-700">URL zdjęcia</label>
+                <input type="text" name="photo_url" id="photo_url"
+                    value="{{ old('photo_url', $doctor->photo_url ?? '') }}"
+                    class="border p-2 rounded w-full mt-1 @error('photo_url') border-red-500 @enderror"
+                    placeholder="https://example.com/zdjecie.jpg" aria-describedby="photo_url-error"
+                    @error('photo_url') aria-invalid="true" @enderror>
+                @error('photo_url')
+                    <span class="text-red-700 text-sm" id="photo_url-error" role="alert">{{ $message }}</span>
+                @enderror
+            </div>
 
-            <input type="text" name="photo_alt" placeholder="ALT zdjęcia"
-                value="{{ old('photo_alt', $doctor->photo_alt ?? '') }}" class="border p-2 rounded w-full">
+            {{-- ALT zdjęcia --}}
+            <div>
+                <label for="photo_alt" class="block text-sm font-medium text-gray-700">Tekst alternatywny zdjęcia
+                    (ALT)</label>
+                <input type="text" name="photo_alt" id="photo_alt" placeholder="zdjecie lekarza o imieniu.."
+                    value="{{ old('photo_alt', $doctor->photo_alt ?? '') }}"
+                    class="border p-2 rounded w-full mt-1 @error('photo_alt') border-red-500 @enderror"
+                    aria-describedby="photo_alt-error" @error('photo_alt') aria-invalid="true" @enderror>
+                @error('photo_alt')
+                    <span class="text-red-700 text-sm" id="photo_alt-error" role="alert">{{ $message }}</span>
+                @enderror
+            </div>
 
-            <input type="text" name="apartment_number" placeholder="Opis kariery zawodowej"
-                value="{{ old('description', $doctor->description ?? '') }}" class="border p-2 rounded w-full">
+            {{-- Opis kariery zawodowej --}}
+            <div>
+                <label for="description" class="block text-sm font-medium text-gray-700">Opis (np. kariera zawodowa,
+                    doświadczenie)</label>
+                <textarea name="description" id="description" rows="4" placeholder="lekarz o imieniu osiągnął.."
+                    class="border p-2 rounded w-full mt-1 @error('description') border-red-500 @enderror"
+                    aria-describedby="description-error" @error('description') aria-invalid="true" @enderror>{{ old('description', $doctor->description ?? '') }}</textarea>
+                @error('description')
+                    <span class="text-red-700 text-sm" id="description-error" role="alert">{{ $message }}</span>
+                @enderror
+            </div>
+
 
             {{-- przyciski --}}
             <div class="pt-3 flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-2 sm:space-y-0">
                 <button type="submit"
-                    class="bg-[#3E92CC] hover:bg-[#2f6ea3] text-white font-semibold px-5 py-2 rounded-lg shadow text-sm sm:text-base">
+                    class="bg-[#236DAA] hover:bg-[#1E5A90] text-white font-semibold px-5 py-2 rounded-lg shadow text-sm sm:text-base">
                     {{ isset($doctor) ? 'Zapisz zmiany' : 'Dodaj dentystę' }}
                 </button>
 

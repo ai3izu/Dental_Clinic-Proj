@@ -6,12 +6,22 @@ use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class AuthController
 {
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
+
+
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (!$user) {
+            throw ValidationException::withMessages([
+                'email' => 'Podany adres e-mail nie istnieje.',
+            ]);
+        }
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
@@ -24,8 +34,7 @@ class AuthController
                 default => abort(403),
             };
         }
-        return back()->withErrors([
-            'email' => 'Podany email nie istnieje.',
+        throw ValidationException::withMessages([
             'password' => 'Podane hasło jest nieprawidłowe.',
         ]);
     }
