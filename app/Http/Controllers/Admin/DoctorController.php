@@ -7,6 +7,9 @@ use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class DoctorController
 
@@ -45,16 +48,33 @@ class DoctorController
 
         $doctor->user->update($userData);
 
-        $doctor->update([
-            'specialization' => $validated['specialization'] ?? null,
-            'phone_number' => $validated['phone_number'] ?? null,
-            'photo_url' => $validated['photo_url'] ?? null,
-            'description' => $validated['description'] ?? null,
-        ]);
+        $updateData = [
+            'specialization' => $validated['specialization'] ?? $doctor->specialization,
+            'phone_number' => $validated['phone_number'] ?? $doctor->phone_number,
+            'description' => $validated['description'] ?? $doctor->description,
+            'photo_alt' => $validated['photo_alt'] ?? $doctor->photo_alt,
+        ];
 
-        return redirect()->route('admin.dashboard', ['tab' => 'doctors'])->with('success', 'Dane lekarza zostały zaktualizowane.');
+        if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+            $file = $request->file('photo');
+
+            if ($doctor->photo_url) {
+                $oldPath = str_replace('storage/', 'public/', $doctor->photo_url);
+                Storage::delete($oldPath);
+                Log::info("Usunięto stary plik: " . $oldPath);
+            }
+
+            $filename = time() . '_' . Str::slug($file->getClientOriginalName());
+            $path = $file->storeAs('images', $filename, 'public');
+
+            $updateData['photo_url'] = 'storage/' . $path;
+        }
+
+        $doctor->update($updateData);
+
+        return redirect()->route('admin.dashboard', ['tab' => 'doctors'])
+            ->with('success', 'Dane lekarza zostały zaktualizowane.');
     }
-
     public function create()
     {
         return view('admin.doctor-form');
@@ -72,17 +92,29 @@ class DoctorController
             'role' => 'doctor',
         ]);
 
+        $photoPath = null;
+
+        if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+
+            $file = $request->file('photo');
+            $filename = time() . '_' . Str::slug($file->getClientOriginalName());
+
+            $path = $file->storeAs('images', $filename, 'public');
+            $photoPath = 'storage/' . $path;
+        }
+
         Doctor::create([
             'user_id' => $user->id,
             'specialization' => $validated['specialization'] ?? null,
             'phone_number' => $validated['phone_number'] ?? null,
-            'photo_url' => $validated['photo_url'] ?? null,
+            'photo_url' => $photoPath,
+            'photo_alt' => $validated['photo_alt'] ?? 'Zdjęcie lekarza ' . $validated['first_name'] . ' ' . $validated['last_name'],
             'description' => $validated['description'] ?? null,
         ]);
 
-        return redirect()->route('admin.dashboard', ['tab' => 'doctors'])->with('success', 'Pacjent dodany pomyślnie');
+        return redirect()->route('admin.dashboard', ['tab' => 'doctors'])
+            ->with('success', 'Lekarz dodany pomyślnie');
     }
-
     public function publicIndex()
     {
         dd("DoctorController::publicIndex() została wywołana!");

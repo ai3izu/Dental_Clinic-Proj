@@ -56,7 +56,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/', [DashboardContoller::class, 'index'])->name('dashboard');
 
     Route::resource('patients', PatientController::class)->except(['show']);
-    Route::resource('patients', PatientController::class)->except(['show']);
     Route::resource('doctors', DoctorController::class)->except(['show']);
     Route::resource('appointments', AppointmentController::class)->except(['show']);
     Route::resource('reviews', ReviewController::class)->except(['show']);
@@ -80,8 +79,6 @@ Route::middleware(['auth', 'role:doctor'])->prefix('doctor')->name('doctor.')->g
 
     // appointment date change
     Route::post('/appointment/{appointment}/reschedule', [DoctorDashboardController::class, 'rescheduleAppointment'])->name('appointment.reschedule');
-
-
 
     // notes for appointment
     Route::get('/notes/{appointment}', [DoctorDashboardController::class, 'showNotesForm'])->name('notes.form');

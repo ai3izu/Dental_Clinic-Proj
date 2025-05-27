@@ -32,7 +32,7 @@ class UpdateDoctorRequest extends FormRequest
             'password' => 'nullable|string|min:8|confirmed',
             'specialization' => 'nullable|string|max:255',
             'phone_number' => 'nullable|string|max:15',
-            'photo_url' => 'nullable|url',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'photo_alt' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:2000',
         ];

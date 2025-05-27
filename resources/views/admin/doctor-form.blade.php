@@ -22,7 +22,7 @@
         {{-- caly formularz --}}
         <form method="POST"
             action="{{ isset($doctor) ? route('admin.doctors.update', $doctor->id) : route('admin.doctors.store') }}"
-            class="space-y-5">
+            class="space-y-5" enctype="multipart/form-data">
             @csrf
             @if (isset($doctor))
                 @method('PUT')
@@ -90,15 +90,20 @@
 
             {{-- URL zdjęcia --}}
             <div>
-                <label for="photo_url" class="block text-sm font-medium text-gray-700">URL zdjęcia</label>
-                <input type="text" name="photo_url" id="photo_url"
-                    value="{{ old('photo_url', $doctor->photo_url ?? '') }}"
-                    class="border p-2 rounded w-full mt-1 @error('photo_url') border-red-500 @enderror"
-                    placeholder="https://example.com/zdjecie.jpg" aria-describedby="photo_url-error"
-                    @error('photo_url') aria-invalid="true" @enderror>
-                @error('photo_url')
-                    <span class="text-red-700 text-sm" id="photo_url-error" role="alert">{{ $message }}</span>
+                <label for="photo" class="block text-sm font-medium text-gray-700">Zdjęcie</label>
+                <input type="file" name="photo" id="photo" accept="image/jpeg,image/png,image/jpg,image/gif"
+                    class="border p-2 rounded w-full mt-1 @error('photo') border-red-500 @enderror"
+                    aria-describedby="photo-error" @error('photo') aria-invalid="true" @enderror>
+                @error('photo')
+                    <span class="text-red-700 text-sm" id="photo-error" role="alert">{{ $message }}</span>
                 @enderror
+                @if (isset($doctor) && $doctor->photo_url)
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-500">Aktualne zdjęcie:</p>
+                        <img src="{{ asset($doctor->photo_url) }}" alt="{{ $doctor->photo_alt }}"
+                            class="h-20 w-20 object-cover rounded">
+                    </div>
+                @endif
             </div>
 
             {{-- ALT zdjęcia --}}
