@@ -13,64 +13,74 @@
         <h2 class="text-2xl sm:text-3xl font-semibold text-[#13293D] mb-4 sm:mb-6">Uzupełnij dane profilu</h2>
 
         @if ($errors->any())
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 sm:mb-6">
-            <strong>Błąd:</strong>
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li class="text-sm sm:text-base">{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 sm:mb-6">
+                <strong>Błąd:</strong>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li class="text-sm sm:text-base">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
         @endif
 
         <form method="POST" action="{{ route('patient.complete-profile.update') }}">
             @csrf
 
             <div class="mb-3 sm:mb-4">
-                <label for="phone_number" class="block text-sm sm:text-base text-[#13293D] font-medium">Numer telefonu:</label>
-                <input type="text" name="phone_number" id="phone_number" value="{{ old('phone_number') }}"
+                <label for="phone_number" class="block text-sm sm:text-base text-[#13293D] font-medium">Numer
+                    telefonu:</label>
+                <input type="text" name="phone_number" id="phone_number"
+                    value="{{ old('phone_number', optional($patient)->phone_number) }}"
                     class="w-full p-2 sm:p-3 border border-[#2A628F] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5FA8D3] text-sm sm:text-base"
                     required>
             </div>
 
             <div class="mb-3 sm:mb-4">
-                <label for="postal_code" class="block text-sm sm:text-base text-[#13293D] font-medium">Kod pocztowy:</label>
-                <input type="text" name="postal_code" id="postal_code" value="{{ old('postal_code') }}"
+                <label for="postal_code" class="block text-sm sm:text-base text-[#13293D] font-medium">Kod
+                    pocztowy:</label>
+                <input type="text" name="postal_code" id="postal_code"
+                    value="{{ old('postal_code', optional($patient)->postal_code) }}"
                     class="w-full p-2 sm:p-3 border border-[#2A628F] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5FA8D3] text-sm sm:text-base"
                     required>
             </div>
 
             <div class="mb-3 sm:mb-4">
                 <label for="city" class="block text-sm sm:text-base text-[#13293D] font-medium">Miasto:</label>
-                <input type="text" name="city" id="city" value="{{ old('city') }}"
+                <input type="text" name="city" id="city" value="{{ old('city', optional($patient)->city) }}"
                     class="w-full p-2 sm:p-3 border border-[#2A628F] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5FA8D3] text-sm sm:text-base"
                     required>
             </div>
 
             <div class="mb-3 sm:mb-4">
                 <label for="street" class="block text-sm sm:text-base text-[#13293D] font-medium">Ulica:</label>
-                <input type="text" name="street" id="street" value="{{ old('street') }}"
+                <input type="text" name="street" id="street" value="{{ old('street', optional($patient)->street) }}"
                     class="w-full p-2 sm:p-3 border border-[#2A628F] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5FA8D3] text-sm sm:text-base"
                     required>
             </div>
 
             <div class="mb-3 sm:mb-4">
-                <label for="apartment_number" class="block text-sm sm:text-base text-[#13293D] font-medium">Numer mieszkania (opcjonalnie):</label>
-                <input type="text" name="apartment_number" id="apartment_number" value="{{ old('apartment_number') }}"
+                <label for="apartment_number" class="block text-sm sm:text-base text-[#13293D] font-medium">Numer
+                    mieszkania (opcjonalnie):</label>
+                <input type="text" name="apartment_number" id="apartment_number"
+                    value="{{ old('apartment_number', optional($patient)->apartment_number) }}"
                     class="w-full p-2 sm:p-3 border border-[#2A628F] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5FA8D3] text-sm sm:text-base">
             </div>
 
             <div class="mb-3 sm:mb-4">
-                <label for="staircase_number" class="block text-sm sm:text-base text-[#13293D] font-medium">Numer klatki (opcjonalnie):</label>
-                <input type="text" name="staircase_number" id="staircase_number" value="{{ old('staircase_number') }}"
+                <label for="staircase_number" class="block text-sm sm:text-base text-[#13293D] font-medium">Numer klatki
+                    (opcjonalnie):</label>
+                <input type="text" name="staircase_number" id="staircase_number"
+                    value="{{ old('staircase_number', optional($patient)->staircase_number) }}"
                     class="w-full p-2 sm:p-3 border border-[#2A628F] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5FA8D3] text-sm sm:text-base">
             </div>
 
             <div class="mb-4 sm:mb-6">
-                <label for="birth_date" class="block text-sm sm:text-base text-[#13293D] font-medium">Data urodzenia:</label>
-                <input type="date" name="birth_date" id="birth_date" value="{{ old('birth_date') }}"
+                <label for="birth_date" class="block text-sm sm:text-base text-[#13293D] font-medium">Data
+                    urodzenia:</label>
+                <input type="date" name="birth_date" id="birth_date"
+                    value="{{ old('birth_date', optional($patient)->birth_date ? \Carbon\Carbon::parse($patient->birth_date)->format('Y-m-d') : '') }}"
                     class="w-full p-2 sm:p-3 border border-[#2A628F] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5FA8D3] text-sm sm:text-base"
-                    required>
+                    required min="1913-01-01" max="2008-12-31">
             </div>
 
             <button type="submit"
@@ -80,7 +90,7 @@
 
             <div class="text-center">
                 <a href="{{ route('patient.dashboard') }}"
-                    class="text-[#5FA8D3]  text-sm sm:text-base font-medium transition duration-300">
+                    class="text-[#5FA8D3] text-sm sm:text-base font-medium transition duration-300">
                     Lub zrób to później i przejdź do profilu
                 </a>
             </div>

@@ -189,8 +189,8 @@
                                 {{ $appointment->patient->user->last_name }}</td>
                             <td class="py-2 px-4">{{ $appointment->doctor->user->first_name }}
                                 {{ $appointment->doctor->user->last_name }}</td>
-                            <td class="py-2 px-4">{{ $appointment->status }}</td>
-                            <td class="py-2 px-4">{{ $appointment->visit_type }}</td>
+                            <td class="py-2 px-4">{{ __('db.appointment_statuses.' . $appointment->status) }}</td>
+                            <td class="py-2 px-4">{{ __('db.visit_types.' . $appointment->visit_type)  }}</td>
                             <td class="py-2 px-4">{{ $appointment->notes }}</td>
                             <td class="py-2 px-4">
                                 <a href="{{ route('admin.appointments.edit', $appointment->id) }}"
@@ -280,7 +280,7 @@
                                 ({{ \Carbon\Carbon::parse($transaction->appointment->appointment_date)->format('Y-m-d H:i') }})
                             </td>
                             <td class="py-2 px-4">{{ number_format($transaction->amount, 2, ',', ' ') }} zł</td>
-                            <td class="py-2 px-4">{{ ucfirst($transaction->status) }}</td>
+                            <td class="py-2 px-4">{{ __('db.transaction_statuses.' . $transaction->status) }}</td>
                             <td class="py-2 px-4">
                                 {{ $transaction->payment_date ? \Carbon\Carbon::parse($transaction->payment_date)->format('Y-m-d H:i') : '-' }}
                             </td>

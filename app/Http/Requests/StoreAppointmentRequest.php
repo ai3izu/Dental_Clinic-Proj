@@ -24,10 +24,19 @@ class StoreAppointmentRequest extends FormRequest
         return [
             'doctor_id' => 'required|exists:doctors,id',
             'patient_id' => 'required|exists:patients,id',
-            'appointment_date' => 'required|after_or_equal:now',
-            'visit_type' => 'required|string|in:implantology,orthodontics,root_canal',
-            'status' => 'required|string|in:scheduled,completed,canceled',
+            'date' => 'required|date_format:Y-m-d',
+            'time' => 'required|date_format:H:i',
+            'appointment_date' => 'required|date_format:Y-m-d H:i',
+            'status' => 'required|in:scheduled,completed,canceled',
+            'visit_type' => 'required|string|max:255',
             'notes' => 'nullable|string|max:1000',
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'appointment_date' => $this->input('date') . ' ' . $this->input('time'),
+        ]);
     }
 }

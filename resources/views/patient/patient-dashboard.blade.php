@@ -1,26 +1,28 @@
 <div x-data="{ tab: 'upcoming' }" class="flex flex-col gap-4">
-    <!-- zakladi -->
-    <div class="flex flex-col md:flex-row gap-2">
+    <div class="flex flex-col md:flex-row gap-2 justify-between items-center">
         <div class="flex flex-wrap sm:flex-column gap-2">
-            <!-- nadchodzace wizyty -->
-            <button @click="tab = 'upcoming'" :class="tab === 'upcoming' ? 'bg-[#3E92CC] text-white' : 'bg-gray-200 text-[#13293D]'" class="px-4 py-2 text-sm md:text-base rounded-lg font-semibold">
+            <button @click="tab = 'upcoming'" :class="tab === 'upcoming' ? 'bg-[#005691] text-white' : 'bg-gray-200 text-[#13293D]'" class="px-4 py-2 text-sm md:text-base rounded-lg font-semibold ">
                 Moje wizyty
             </button>
-            <!-- zakonczone wizyty -->
-            <button @click="tab = 'completed'" :class="tab === 'completed' ? 'bg-[#3E92CC] text-white' : 'bg-gray-200 text-[#13293D]'" class="px-4 py-2 text-sm md:text-base rounded-lg font-semibold">
+            <button @click="tab = 'completed'" :class="tab === 'completed' ? 'bg-[#005691] text-white' : 'bg-gray-200 text-[#13293D]'" class="px-4 py-2 text-sm md:text-base rounded-lg font-semibold">
                 Odbyte wizyty
             </button>
-            <!-- anulowane wizyty -->
-            <button @click="tab = 'canceled'" :class="tab === 'canceled' ? 'bg-[#3E92CC] text-white' : 'bg-gray-200 text-[#13293D]'" class="px-4 py-2 text-sm md:text-base rounded-lg font-semibold">
+            <button @click="tab = 'canceled'" :class="tab === 'canceled' ? 'bg-[#005691] text-white' : 'bg-gray-200 text-[#13293D]'" class="px-4 py-2 text-sm md:text-base rounded-lg font-semibold">
                 Anulowane wizyty
             </button>
         </div>
-        <!-- umawianie wizyty -->
-        <a href="{{ route('doctors.public') }}"
-            class="md:ml-auto bg-[#3E92CC] text-white px-4 py-2 rounded-lg font-semibold text-sm md:text-base">
-            Umów wizytę
-        </a>
+        <div class="flex flex-wrap gap-2 mt-4 md:mt-0">
+            <a href="{{ route('patient.complete-profile') }}"
+                class="bg-[#005691] text-white px-4 py-2 rounded-lg font-semibold text-sm md:text-base whitespace-nowrap hover:bg-[#004777] transition-colors duration-300">
+                Edytuj profil
+            </a>
+            <a href="{{ route('doctors.public') }}"
+                class="bg-[#005691] text-white px-4 py-2 rounded-lg font-semibold text-sm md:text-base whitespace-nowrap hover:bg-[#004777] transition-colors duration-300">
+                Umów wizytę
+            </a>
+        </div>
     </div>
+
 
     <!-- moje wizyty -->
     <div x-show="tab === 'upcoming'" x-cloak class="bg-[#EAF6FF] p-4 rounded-lg shadow space-y-4">
@@ -32,7 +34,7 @@
                 <h4 class="font-semibold text-lg text-[#13293D]">
                     dr {{ $appointment->doctor->user->first_name }} {{ $appointment->doctor->user->last_name }}
                 </h4>
-                <p class="text-gray-700">Typ wizyty: {{ ucfirst(__($appointment->visit_type)) }}</p>
+                <p class="text-gray-700">Typ wizyty: {{ __('db.visit_types.' . $appointment->visit_type)}}</p>
                 <p class="text-gray-600">Data:
                     {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d.m.Y H:i') }}
                 </p>
@@ -83,7 +85,7 @@
                 <h4 class="font-semibold text-lg text-[#13293D]">
                     dr {{ $appointment->doctor->user->first_name }} {{ $appointment->doctor->user->last_name }}
                 </h4>
-                <p class="text-gray-700">Typ wizyty: {{ ucfirst(__($appointment->visit_type)) }}</p>
+                <p class="text-gray-700">Typ wizyty: {{ __('db.visit_types.' . $appointment->visit_type) }}</p>
                 <p class="text-gray-600">Data:
                     {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d.m.Y H:i') }}
                 </p>
@@ -103,7 +105,7 @@
                 <h4 class="font-semibold text-lg text-[#13293D]">
                     dr {{ $appointment->doctor->user->first_name }} {{ $appointment->doctor->user->last_name }}
                 </h4>
-                <p class="text-gray-700">Typ wizyty: {{ ucfirst(__($appointment->visit_type)) }}</p>
+                <p class="text-gray-700">Typ wizyty: {{ __('db.visit_types.' . $appointment->visit_type) }}</p>
                 <p class="text-gray-600">Data:
                     {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d.m.Y H:i') }}
                 </p>

@@ -28,7 +28,7 @@
                             Pacjent: {{ $appointment->patient->user->first_name }}
                             {{ $appointment->patient->user->last_name }}
                         </h4>
-                        <p class="text-gray-700">Typ: {{ ucfirst(__($appointment->visit_type)) }}</p>
+                        <p class="text-gray-700">Typ: {{ __('db.visit_types.' . $appointment->visit_type) }}</p>
                         <p class="text-gray-600">Data:
                             {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d.m.Y H:i') }}</p>
 
@@ -42,13 +42,13 @@
                         <form method="POST" action="{{ route('doctor.appointment.reschedule', $appointment->id) }}"
                             class="flex flex-col gap-3 sm:flex-row sm:items-end" x-data="{
                                 selectedDate: '{{ old('new_appointment_date', \Carbon\Carbon::parse($appointment->appointment_date)->format('Y-m-d')) }}',
-                            
+
                                 selectedTime: '{{ old('new_appointment_time', \Carbon\Carbon::parse($appointment->appointment_date)->format('H:i')) }}',
-                            
+
                                 availableTimes: [],
-                            
+
                                 doctorId: {{ $doctor->id }},
-                            
+
                                 fetchAvailableTimes() {
                                     if (!this.selectedDate) {
                                         this.availableTimes = [];
@@ -59,7 +59,7 @@
                                         .then(response => response.json())
                                         .then(data => {
                                             this.availableTimes = data;
-                            
+
                                             if (!this.availableTimes.includes(this.selectedTime)) {
                                                 if (this.availableTimes.length > 0) {
                                                     this.selectedTime = this.availableTimes[0];
@@ -147,7 +147,7 @@
                     Pacjent: {{ $appointment->patient->user->first_name }}
                     {{ $appointment->patient->user->last_name }}
                 </h4>
-                <p class="text-gray-700">Typ: {{ ucfirst(__($appointment->visit_type)) }}</p>
+                <p class="text-gray-700">Typ: {{ __('db.visit_types.' . $appointment->visit_type) }}</p>
                 <p class="text-gray-600">Data:
                     {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d.m.Y H:i') }}</p>
                 <p
@@ -176,7 +176,7 @@
                     Pacjent: {{ $appointment->patient->user->first_name }}
                     {{ $appointment->patient->user->last_name }}
                 </h4>
-                <p class="text-gray-700">Typ: {{ ucfirst(__($appointment->visit_type)) }}</p>
+                <p class="text-gray-700">Typ: {{ __('db.visit_types.' . $appointment->visit_type) }}</p>
                 <p class="text-gray-600">Data:
                     {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d.m.Y H:i') }}</p>
                 <form action="{{ route('doctor.appointment.restore', $appointment->id) }}" method="POST"

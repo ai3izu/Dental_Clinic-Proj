@@ -35,7 +35,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/doctors', [DoctorListController::class, 'index'])->name('doctors.public');
 
-Route::get('/doctor/appointments/available-slots', [DoctorDashboardController::class, 'getAvailableSlots'])->name('doctor.appointments.available_slots');
+
 // Routes for the patient
 Route::middleware(['auth', 'role:patient'])->group(function () {
     Route::get('/patient/complete-profile', [ProfileCompletion::class, 'show'])->name('patient.complete-profile');
@@ -55,18 +55,22 @@ Route::middleware(['auth', 'role:patient'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardContoller::class, 'index'])->name('dashboard');
 
+
     Route::resource('patients', PatientController::class)->except(['show']);
     Route::resource('doctors', DoctorController::class)->except(['show']);
     Route::resource('appointments', AppointmentController::class)->except(['show']);
+    Route::get('/appointments/available-slots', [AppointmentController::class, 'getAvailableSlots'])->name('appointments.available_slots');
+
     Route::resource('reviews', ReviewController::class)->except(['show']);
     Route::resource('transactions', TransactionController::class)->except(['show']);
 });
 
 // Routes for the doctor
 Route::middleware(['auth', 'role:doctor'])->prefix('doctor')->name('doctor.')->group(function () {
-
     // dashboard
     Route::get('/dashboard', [DoctorDashboardController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('/appointments/available-slots', [DoctorDashboardController::class, 'getAvailableSlots'])->name('appointments.available_slots');
 
     // confirm appointpent
     Route::post('/appointment/{appointment}/confirm', [DoctorDashboardController::class, 'confirmAppointment'])->name('appointment.confirm');
