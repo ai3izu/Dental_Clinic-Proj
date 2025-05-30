@@ -10,8 +10,10 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Doctor\DoctorDashboardController;
 use App\Http\Controllers\Patient\AppointmentReservationController;
 use App\Http\Controllers\Patient\PatientDashboardController;
+use App\Http\Controllers\Patient\PatientReviewController;
 use App\Http\Controllers\Public\DoctorListController;
 use App\Http\Controllers\Patient\ProfileCompletion;
+use App\Http\Controllers\Public\DoctorPageController;
 use Illuminate\Support\Facades\Route;
 
 // Default route
@@ -34,6 +36,7 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.po
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/doctors', [DoctorListController::class, 'index'])->name('doctors.public');
+Route::get('/doctors/{doctor}', [DoctorPageController::class, 'index'])->name('doctors.show');
 
 
 // Routes for the patient
@@ -49,6 +52,8 @@ Route::middleware(['auth', 'role:patient'])->group(function () {
     Route::post('/appointment/{appointment}/cancel', [PatientDashboardController::class, 'cancel'])->name('patient.appointment.cancel');
 
     Route::get('/patient/appointments/available-slots', [AppointmentReservationController::class, 'getAvailableSlots'])->name('patient.appointments.available_slots');
+
+    Route::post('/doctors/{doctor}/reviews', [PatientReviewController::class, 'storePublic'])->name('doctors.reviews.store');
 });
 
 // Routes for the admin 

@@ -63,8 +63,8 @@ class DoctorController
                 Storage::delete($oldPath);
                 Log::info("Usunięto stary plik: " . $oldPath);
             }
-
-            $filename = time() . '_' . Str::slug($file->getClientOriginalName());
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $extension;
             $path = $file->storeAs('images', $filename, 'public');
 
             $updateData['photo_url'] = 'storage/' . $path;
@@ -97,7 +97,8 @@ class DoctorController
         if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
 
             $file = $request->file('photo');
-            $filename = time() . '_' . Str::slug($file->getClientOriginalName());
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $extension;
 
             $path = $file->storeAs('images', $filename, 'public');
             $photoPath = 'storage/' . $path;

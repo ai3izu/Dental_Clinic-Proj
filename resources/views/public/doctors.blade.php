@@ -26,29 +26,17 @@
                             </div>
                         @endif
                         <h3 class="text-xl font-semibold text-gray-900">dr {{ $doctor->user->first_name }}
-                            {{ $doctor->user->last_name }}</h3>
+                            {{ $doctor->user->last_name }}
+                        </h3>
                         <p class="text-gray-700 mb-4">{{ $doctor->specialization }}</p>
                         <p class="text-gray-800 text-center mb-6">{{ $doctor->description }}</p>
 
                         <div class="flex justify-center">
-                            @auth
-                                @if (Auth::user()->role === 'patient')
-                                    <a href="{{ route('patient.appoitment.create', $doctor->id) }}"
-                                        class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded-lg text-center transition duration-300">
-                                        Umów wizytę
-                                    </a>
-                                @else
-                                    <a href="{{ route('login') }}"
-                                        class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded-lg text-center transition duration-300">
-                                        Umów wizytę
-                                    </a>
-                                @endif
-                            @else
-                                <a href="{{ route('login') }}"
-                                    class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded-lg text-center transition duration-300">
-                                    Umów wizytę
-                                </a>
-                            @endauth
+
+                            <a href="{{ route('doctors.show', $doctor->id) }}"
+                                class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded-lg text-center transition duration-300">
+                                Umów wizytę
+                            </a>
                         </div>
                     </div>
                 </div>

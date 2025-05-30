@@ -30,7 +30,7 @@ class AuthController
             return match ($role) {
                 'admin' => redirect()->route('admin.dashboard'),
                 'doctor' => redirect()->route('doctor.dashboard'),
-                'patient' => redirect()->route('patient.dashboard'),
+                'patient' => redirect()->intended(route('patient.dashboard')),
                 default => abort(403),
             };
         }
