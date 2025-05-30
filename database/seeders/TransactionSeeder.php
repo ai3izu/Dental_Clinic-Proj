@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Appointment;
+use App\Models\Transaction;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
@@ -14,19 +16,11 @@ class TransactionSeeder extends Seeder
      */
     public function run(): void
     {
-        $appointmentsId = DB::table('appointments')->pluck('id')->toArray();
-        $amounts = [150, 200, 250, 300, 350, 400, 450, 500];
+        $appointments = Appointment::all();
 
-        foreach ($appointmentsId as $appointmentId) {
-            $isPaid = rand(0, 1);
-
-            DB::table('transactions')->insert([
-                'appointment_id' => $appointmentId,
-                'amount' => $amounts[array_rand($amounts)],
-                'status' => $isPaid ? 'paid' : 'unpaid',
-                'payment_date' => $isPaid ? Carbon::now()->subDays(rand(1, 30)) : null,
-                'created_at' => now(),
-                'updated_at' => now(),
+        foreach ($appointments as $appointment) {
+            Transaction::factory()->create([
+                'appointment_id' => $appointment->id,
             ]);
         }
     }
