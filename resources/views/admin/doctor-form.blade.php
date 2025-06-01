@@ -34,7 +34,8 @@
                 <input type="text" name="first_name" id="first_name" placeholder="np. Jan"
                     value="{{ old('first_name', $doctor->user->first_name ?? '') }}" required
                     class="border p-2 rounded w-full mt-1 @error('first_name') border-red-500 @enderror"
-                    aria-describedby="first_name-error" @error('first_name') aria-invalid="true" @enderror>
+                    aria-describedby="first_name-error" @error('first_name') aria-invalid="true" @enderror
+                    **aria-label="Imię dentysty" **>
                 @error('first_name')
                     <span class="text-red-700 text-sm" id="first_name-error" role="alert">{{ $message }}</span>
                 @enderror
@@ -46,7 +47,8 @@
                 <input type="text" name="last_name" id="last_name" placeholder="np. Kowlaski"
                     value="{{ old('last_name', $doctor->user->last_name ?? '') }}" required
                     class="border p-2 rounded w-full mt-1 @error('last_name') border-red-500 @enderror"
-                    aria-describedby="last_name-error" @error('last_name') aria-invalid="true" @enderror>
+                    aria-describedby="last_name-error" @error('last_name') aria-invalid="true" @enderror
+                    **aria-label="Nazwisko dentysty" **>
                 @error('last_name')
                     <span class="text-red-700 text-sm" id="last_name-error" role="alert">{{ $message }}</span>
                 @enderror
@@ -58,7 +60,8 @@
                 <input type="email" name="email" id="email" placeholder="email@example.pl"
                     value="{{ old('email', $doctor->user->email ?? '') }}" required
                     class="border p-2 rounded w-full mt-1 @error('email') border-red-500 @enderror"
-                    aria-describedby="email-error" @error('email') aria-invalid="true" @enderror>
+                    aria-describedby="email-error" @error('email') aria-invalid="true" @enderror
+                    **aria-label="Adres e-mail dentysty" **>
                 @error('email')
                     <span class="text-red-700 text-sm" id="email-error" role="alert">{{ $message }}</span>
                 @enderror
@@ -70,7 +73,8 @@
                 <input type="tel" name="phone_number" id="phone_number" placeholder="000-000-000"
                     value="{{ old('phone_number', $doctor->phone_number ?? '') }}"
                     class="border p-2 rounded w-full mt-1 @error('phone_number') border-red-500 @enderror"
-                    aria-describedby="phone_number-error" @error('phone_number') aria-invalid="true" @enderror>
+                    aria-describedby="phone_number-error" @error('phone_number') aria-invalid="true" @enderror
+                    **aria-label="Numer telefonu dentysty" **>
                 @error('phone_number')
                     <span class="text-red-700 text-sm" id="phone_number-error" role="alert">{{ $message }}</span>
                 @enderror
@@ -82,7 +86,8 @@
                 <input type="text" name="specialization" id="specialization" placeholder="np. Ortodonta"
                     value="{{ old('specialization', $doctor->specialization ?? '') }}"
                     class="border p-2 rounded w-full mt-1 @error('specialization') border-red-500 @enderror"
-                    aria-describedby="specialization-error" @error('specialization') aria-invalid="true" @enderror>
+                    aria-describedby="specialization-error" @error('specialization') aria-invalid="true" @enderror
+                    **aria-label="Specjalizacja dentysty" **>
                 @error('specialization')
                     <span class="text-red-700 text-sm" id="specialization-error" role="alert">{{ $message }}</span>
                 @enderror
@@ -93,7 +98,8 @@
                 <label for="photo" class="block text-sm font-medium text-gray-700">Zdjęcie</label>
                 <input type="file" name="photo" id="photo" accept="image/jpeg,image/png,image/jpg,image/gif"
                     class="border p-2 rounded w-full mt-1 @error('photo') border-red-500 @enderror"
-                    aria-describedby="photo-error" @error('photo') aria-invalid="true" @enderror>
+                    aria-describedby="photo-error" @error('photo') aria-invalid="true" @enderror
+                    **aria-label="Wgraj zdjęcie dentysty" **>
                 @error('photo')
                     <span class="text-red-700 text-sm" id="photo-error" role="alert">{{ $message }}</span>
                 @enderror
@@ -113,7 +119,8 @@
                 <input type="text" name="photo_alt" id="photo_alt" placeholder="zdjecie lekarza o imieniu.."
                     value="{{ old('photo_alt', $doctor->photo_alt ?? '') }}"
                     class="border p-2 rounded w-full mt-1 @error('photo_alt') border-red-500 @enderror"
-                    aria-describedby="photo_alt-error" @error('photo_alt') aria-invalid="true" @enderror>
+                    aria-describedby="photo_alt-error" @error('photo_alt') aria-invalid="true" @enderror
+                    **aria-label="Tekst alternatywny dla zdjęcia dentysty" **>
                 @error('photo_alt')
                     <span class="text-red-700 text-sm" id="photo_alt-error" role="alert">{{ $message }}</span>
                 @enderror
@@ -125,7 +132,9 @@
                     doświadczenie)</label>
                 <textarea name="description" id="description" rows="4" placeholder="lekarz o imieniu osiągnął.."
                     class="border p-2 rounded w-full mt-1 @error('description') border-red-500 @enderror"
-                    aria-describedby="description-error" @error('description') aria-invalid="true" @enderror>{{ old('description', $doctor->description ?? '') }}</textarea>
+                    aria-describedby="description-error" @error('description') aria-invalid="true" @enderror
+                    **aria-label="Opis kariery zawodowej i doświadczenia dentysty"
+                    **>{{ old('description', $doctor->description ?? '') }}</textarea>
                 @error('description')
                     <span class="text-red-700 text-sm" id="description-error" role="alert">{{ $message }}</span>
                 @enderror

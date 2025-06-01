@@ -39,7 +39,6 @@
                                 .then(response => response.json())
                                 .then(data => {
                                     this.availableTimes = data;
-                                    // Jeśli aktualnie wybrany czas nie jest już dostępny, wybierz pierwszy dostępny lub wyczyść
                                     if (!this.availableTimes.includes(this.selectedTime)) {
                                         if (this.availableTimes.length > 0) {
                                             this.selectedTime = this.availableTimes[0];
@@ -68,7 +67,7 @@
                 <select name="doctor_id" id="doctor_id" required
                     class="border p-2 rounded w-full @error('doctor_id') border-red-500 @enderror"
                     aria-describedby="doctor_id-error" @error('doctor_id') aria-invalid="true" @enderror
-                    x-model="selectedDoctor">
+                    x-model="selectedDoctor" **aria-label="Wybierz lekarza"**>
                     <option value="">Wybierz lekarza</option>
                     @foreach ($doctors as $doctor)
                         <option value="{{ $doctor->id }}">{{ $doctor->user->first_name }} {{ $doctor->user->last_name }}
@@ -85,7 +84,7 @@
                 <label for="patient_id" class="block text-sm font-medium text-gray-700">Pacjent</label>
                 <select name="patient_id" id="patient_id" required
                     class="border p-2 rounded w-full @error('patient_id') border-red-500 @enderror"
-                    aria-describedby="patient_id-error" @error('patient_id') aria-invalid="true" @enderror>
+                    aria-describedby="patient_id-error" @error('patient_id') aria-invalid="true" @enderror **aria-label="Wybierz pacjenta"**>
                     <option value="">Wybierz pacjenta</option>
                     @foreach ($patients as $patient)
                         <option value="{{ $patient->id }}"
@@ -104,7 +103,7 @@
                 <label for="date_input" class="block text-sm font-medium text-gray-700">Data wizyty</label>
                 <input type="date" name="date" id="date_input" x-model="selectedDate" min="{{ now()->format('Y-m-d') }}"
                     class="border p-2 rounded w-full @error('date') border-red-500 @enderror" aria-describedby="date-error"
-                    @error('date') aria-invalid="true" @enderror>
+                    @error('date') aria-invalid="true" @enderror **aria-label="Data wizyty"**>
                 @error('date')
                     <span class="text-red-700 text-sm" id="date-error" role="alert">{{ $message }}</span>
                 @enderror
@@ -115,7 +114,7 @@
                 <label for="time_input" class="block text-sm font-medium text-gray-700">Godzina wizyty</label>
                 <select name="time" id="time_input" x-model="selectedTime" required
                     class="border p-2 rounded w-full @error('time') border-red-500 @enderror" aria-describedby="time-error"
-                    @error('time') aria-invalid="true" @enderror>
+                    @error('time') aria-invalid="true" @enderror **aria-label="Godzina wizyty"**>
                     <template x-for="timeSlot in availableTimes" :key="timeSlot">
                         <option :value="timeSlot" x-text="timeSlot"></option>
                     </template>
@@ -128,7 +127,6 @@
                 @enderror
             </div>
 
-            {{-- ukryte pole dla pełnej daty i godziny, wysyłane do kontrolera --}}
             <input type="hidden" name="appointment_date" :value="selectedDate + ' ' + selectedTime">
 
 
@@ -137,7 +135,7 @@
                 <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                 <select name="status" id="status" required
                     class="border p-2 rounded w-full @error('status') border-red-500 @enderror"
-                    aria-describedby="status-error" @error('status') aria-invalid="true" @enderror>
+                    aria-describedby="status-error" @error('status') aria-invalid="true" @enderror **aria-label="Status wizyty"**>
                     @foreach (__('db.appointment_statuses') as $key => $value)
                         <option value="{{ $key }}"
                             {{ old('status', $appointment->status ?? '') == $key ? 'selected' : '' }}>
@@ -155,7 +153,7 @@
                 <label for="visit_type" class="block text-sm font-medium text-gray-700">Typ wizyty</label>
                 <select name="visit_type" id="visit_type" required
                     class="border p-2 rounded w-full @error('visit_type') border-red-500 @enderror"
-                    aria-describedby="visit_type-error" @error('visit_type') aria-invalid="true" @enderror>
+                    aria-describedby="visit_type-error" @error('visit_type') aria-invalid="true" @enderror **aria-label="Typ wizyty"**>
                     @foreach (__('db.visit_types') as $key => $value)
                         <option value="{{ $key }}"
                             {{ old('visit_type', $appointment->visit_type ?? '') == $key ? 'selected' : '' }}>
@@ -173,7 +171,7 @@
                 <label for="notes" class="block text-sm font-medium text-gray-700">Notatki</label>
                 <textarea name="notes" id="notes" class="border p-2 rounded w-full @error('notes') border-red-500 @enderror"
                     aria-describedby="notes-error" @error('notes') aria-invalid="true"
-                    @enderror>{{ old('notes', $appointment->notes ?? '') }}</textarea>
+                    @enderror **aria-label="Notatki do wizyty"**>{{ old('notes', $appointment->notes ?? '') }}</textarea>
                 @error('notes')
                     <span class="text-red-700 text-sm" id="notes-error" role="alert">{{ $message }}</span>
                 @enderror

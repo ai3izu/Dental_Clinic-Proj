@@ -8,9 +8,11 @@
 
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         as="style">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
-    <meta name="description" content="@yield('description', 'DentMax - nowoczesna klinika stomatologiczna z kompleksową ofertą usług dentystycznych i wygodnym systemem rezerwacji online.')">
+    <meta name="description"
+        content="@yield('description', 'DentMax - nowoczesna klinika stomatologiczna z kompleksową ofertą usług dentystycznych i wygodnym systemem rezerwacji online.')">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

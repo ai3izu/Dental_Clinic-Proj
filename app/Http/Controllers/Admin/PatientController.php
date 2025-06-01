@@ -13,7 +13,7 @@ class PatientController
 {
     public function index()
     {
-        // Tymczasowo wyłącz przekierowanie dla testów
+
         // $patients = Patient::paginate(20);
         // return view('admin.patients.index', compact('patients'));
         return redirect()->route('admin.dashboard', ['tab' => 'patients']);

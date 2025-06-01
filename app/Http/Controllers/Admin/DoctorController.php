@@ -64,6 +64,7 @@ class DoctorController
                 Log::info("Usunięto stary plik: " . $oldPath);
             }
             $extension = $file->getClientOriginalExtension();
+            // zmienic z time na uuid
             $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $extension;
             $path = $file->storeAs('images', $filename, 'public');
 

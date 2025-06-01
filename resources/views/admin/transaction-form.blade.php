@@ -35,7 +35,7 @@
                 <select name="appointment_id" id="appointment_id" required
                     class="border p-2 rounded w-full mt-1 @error('appointment_id') border-red-500 @enderror"
                     aria-describedby="appointment_id-error" @error('appointment_id') aria-invalid="true" @enderror
-                    {{ isset($transaction) ? 'disabled' : '' }}>
+                    {{ isset($transaction) ? 'disabled' : '' }} **aria-label="Wybierz wizytę"**>
                     <option value="">Wybierz wizytę</option>
                     @foreach ($appointments as $appointment)
                         <option value="{{ $appointment->id }}"
@@ -60,7 +60,7 @@
                 <input type="number" name="amount" id="amount" required step="5.00" min="0"
                     placeholder="np. 150.00" value="{{ old('amount', $transaction->amount ?? '') }}"
                     class="border p-2 rounded w-full mt-1 @error('amount') border-red-500 @enderror"
-                    aria-describedby="amount-error" @error('amount') aria-invalid="true" @enderror>
+                    aria-describedby="amount-error" @error('amount') aria-invalid="true" @enderror **aria-label="Kwota transakcji"**>
                 @error('amount')
                     <span class="text-red-700 text-sm" id="amount-error" role="alert">{{ $message }}</span>
                 @enderror
@@ -71,7 +71,7 @@
                 <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                 <select name="status" id="status" required
                     class="border p-2 rounded w-full mt-1 @error('status') border-red-500 @enderror"
-                    aria-describedby="status-error" @error('status') aria-invalid="true" @enderror>
+                    aria-describedby="status-error" @error('status') aria-invalid="true" @enderror **aria-label="Status transakcji"**>
                     <option value="paid" {{ old('status', $transaction->status ?? '') === 'paid' ? 'selected' : '' }}>
                         Opłacona
                     </option>
@@ -91,7 +91,7 @@
                     value="{{ old('payment_date', isset($transaction->payment_date) ? \Carbon\Carbon::parse($transaction->payment_date)->format('Y-m-d') : '') }}"
                     max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                     class="border p-2 rounded w-full mt-1 @error('payment_date') border-red-500 @enderror"
-                    aria-describedby="payment_date-error" @error('payment_date') aria-invalid="true" @enderror>
+                    aria-describedby="payment_date-error" @error('payment_date') aria-invalid="true" @enderror **aria-label="Data płatności transakcji"**>
                 @error('payment_date')
                     <span class="text-red-700 text-sm" id="payment_date-error" role="alert">{{ $message }}</span>
                 @enderror

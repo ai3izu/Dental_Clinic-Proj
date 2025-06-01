@@ -14,12 +14,10 @@
                     wygodnie i bezpiecznie.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    {{-- Adjusted text-primary to a darker blue for better contrast on white background --}}
                     <a href="{{ route('register') }}"
                         class="bg-white text-[#005691] font-semibold px-8 py-4 rounded-lg shadow-lg hover:bg-gray-50 transition duration-300 transform hover:scale-105">
                         Załóż konto
                     </a>
-                    {{-- Border and text color remains white on the darker hero background --}}
                     <a href="#doctors"
                         class="bg-transparent border-2 border-white text-white font-semibold px-8 py-4 rounded-lg hover:bg-white hover:text-[#005691] transition duration-300">
                         Nasi specjaliści

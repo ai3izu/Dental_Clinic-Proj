@@ -21,8 +21,6 @@ class PatientDashboardController
         return view('dashboard', compact('upcoming', 'completed', 'canceled'));
     }
 
-
-
     public function pay(Appointment $appointment)
     {
         if ($appointment->status !== 'canceled' && $appointment->status !== 'completed') {
@@ -40,7 +38,6 @@ class PatientDashboardController
 
         return redirect()->route('patient.dashboard')->with('error', 'Wizyta nie może zostać opłacona.');
     }
-
 
     public function cancel(Appointment $appointment)
     {

@@ -282,7 +282,7 @@
                             <td class="py-2 px-4">{{ number_format($transaction->amount, 2, ',', ' ') }} zł</td>
                             <td class="py-2 px-4">{{ __('db.transaction_statuses.' . $transaction->status) }}</td>
                             <td class="py-2 px-4">
-                                {{ $transaction->payment_date ? \Carbon\Carbon::parse($transaction->payment_date)->format('Y-m-d H:i') : '-' }}
+                                {{ $transaction->payment_date ? \Carbon\Carbon::parse($transaction->payment_date)->format('Y-m-d') : 'Brak' }}
                             </td>
                             <td class="py-2 px-4">
                                 <a href="{{ route('admin.transactions.edit', $transaction->id) }}"

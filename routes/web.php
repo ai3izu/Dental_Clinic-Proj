@@ -66,6 +66,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('appointments', AppointmentController::class)->except(['show']);
     Route::get('/appointments/available-slots', [AppointmentController::class, 'getAvailableSlots'])->name('appointments.available_slots');
 
+
+
+
     Route::resource('reviews', ReviewController::class)->except(['show']);
     Route::resource('transactions', TransactionController::class)->except(['show']);
 });

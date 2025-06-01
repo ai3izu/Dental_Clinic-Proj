@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container mx-auto px-4 py-12">
-        {{-- Back Button --}}
+        {{-- powrot --}}
         <div class="mb-6">
             <a href="{{ route('doctors.public') }}"
                 class="inline-flex items-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50">
@@ -37,7 +37,7 @@
                     <p class="text-blue-600 text-xl font-semibold mb-4">{{ $doctor->specialization }}</p>
                     <p class="text-gray-800 text-lg leading-relaxed mb-6">{{ $doctor->description }}</p>
 
-                    {{-- Doctor Contact Information --}}
+                    {{-- informacje konaktowe --}}
                     <div class="mb-6 text-gray-700">
                         <p class="flex items-center justify-center md:justify-start mb-2">
                             <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -86,7 +86,7 @@
         <div class="bg-white p-8 rounded-xl shadow-md">
             <h2 class="text-2xl font-bold text-gray-900 mb-6">Opinie o dr {{ $doctor->user->last_name }}</h2>
 
-            {{-- Session Messages for Review Submission --}}
+            {{-- wiadomosci dla sesji --}}
             @if (session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
                     role="alert">
@@ -102,7 +102,7 @@
                 </div>
             @endif
 
-            {{-- Add Review Form --}}
+            {{-- dodawanie opini --}}
             @auth
                 @if (Auth::user()->role === 'patient' && $canAddReview)
                     <div class="mb-8 p-6 bg-gray-50 rounded-lg border border-gray-200">

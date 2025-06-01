@@ -178,23 +178,26 @@
 
 <body class="bg-gradient-to-b from-[#3E92CC] to-[#62B6CB] h-screen flex items-center justify-center flex-col">
 
-    <div class="achievement">
+    <div class="achievement" **role="banner" aria-label="Klinika DentMax - Twoje zęby nas pokochają!" **>
         <div class="icon-outer-container ">
             <div class="spark-container">
                 <div class="spark">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        **aria-hidden="true" focusable="false" **>
                         <path fill="currentColor" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5"
                             d="M3 12c6.268 0 9-2.637 9-9c0 6.363 2.713 9 9 9c-6.287 0-9 2.713-9 9c0-6.287-2.732-9-9-9Z" />
                     </svg>
                 </div>
                 <div class="spark">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        **aria-hidden="true" focusable="false" **>
                         <path fill="currentColor" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5"
                             d="M3 12c6.268 0 9-2.637 9-9c0 6.363 2.713 9 9 9c-6.287 0-9 2.713-9 9c0-6.287-2.732-9-9-9Z" />
                     </svg>
                 </div>
                 <div class="spark">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        **aria-hidden="true" focusable="false" **>
                         <path fill="currentColor" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5"
                             d="M3 12c6.268 0 9-2.637 9-9c0 6.363 2.713 9 9 9c-6.287 0-9 2.713-9 9c0-6.287-2.732-9-9-9Z" />
                     </svg>
@@ -205,9 +208,9 @@
                 <div class="icon">
                     <div class="highlight" style="opacity: 0.25; z-index: 2;"></div>
                     <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 -960 960 960" width="36px"
-                        fill="#FFFFFF">
+                        fill="#FFFFFF" **aria-hidden="true" focusable="false" **>
                         <path
-                            d="M680-875q66 0 113 47t47 113q0 11-1.5 29.5T834-643l-55 403q-5 38-34.5 62T677-154q-23 0-42.5-10T602-192L495-348q-2-4-6.5-5.5T479-355q-4 0-16 9L359-195q-14 20-34.5 30.5T281-154q-38 0-67-24.5T180-241l-54-402q-3-24-4.5-42.5T120-715q0-66 47-113t113-47q36 0 57.5 9.5T379-845q20 11 42.5 20.5T480-815q36 0 58.5-9.5T581-845q20-11 42-20.5t57-9.5Zm0 80q-23 0-40.5 9.5T601-765q-21 11-49 20.5t-72 9.5q-44 0-72-9.5T359-765q-21-11-38.5-20.5T280-795q-33 0-56.5 23.5T200-715q0 8 1 23t4 35l55 405q1 8 7 12.5t14 4.5q5 0 9-2t6-6l101-148q14-20 36-32t47-12q25 0 47 12t36 32l103 151q2 3 5 4.5t7 1.5q8 0 14.5-4.5T700-251l55-406q3-20 4-35t1-23q0-33-23.5-56.5T680-795ZM480-515Z" />
+                            d="M680-875q66 0 113 47t47 113q0 11-1.5 29.5T834-643l-55 403q-5 38-34.5 62T677-154q-23 0-42.5-10T602-192L495-348q-2-4-6.5-5.5T479-355q-4 0-16 9L359-195q-14 20-34.5 30.5T281-154q-38 0-67-24.5T180-241l-54-402q-3-24-4.5-42.5T120-715q0-66 47-113t113-47q36 0 57.5 9.5T379-845q20 11 42.5 20.5T480-815q36 0 58.5-9.5T581-845q20-11 42-20.5t57-9.5ZM480-515Z" />
                     </svg>
                 </div>
             </div>
@@ -219,42 +222,47 @@
         </div>
     </div>
 
-    <div class="bg-white p-4 sm:p-6 md:p-8 rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm md:max-w-md">
-        <h2 class="text-2xl sm:text-3xl font-semibold text-[#13293D] mb-4 sm:mb-6">Zaloguj się</h2>
+    <div class="bg-white p-4 sm:p-6 md:p-8 rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm md:max-w-md"
+        **aria-labelledby="login-heading" **>
+        <h2 id="login-heading" class="text-2xl sm:text-3xl font-semibold text-[#13293D] mb-4 sm:mb-6">Zaloguj się</h2>
 
         @if ($errors->any())
-            <div class="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-2 sm:mb-4 text-sm">
+            <div class="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-2 sm:mb-4 text-sm" **role="alert"
+                **>
                 <strong>Błąd:</strong> {{ $errors->first() }}
             </div>
         @endif
 
-        <form method="POST" action="{{ route('login.post') }}">
+        <form method="POST" action="{{ route('login.post') }}" **aria-label="Formularz logowania" **>
             @csrf
             <div class="mb-2 sm:mb-4">
                 <label for="email" class="block text-sm sm:text-base text-[#13293D] font-medium">Email:</label>
                 <input type="email" name="email" id="email"
                     class="w-full p-2 sm:p-3 border border-[#2A628F] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5FA8D3] text-sm"
-                    required>
+                    required **aria-label="Wprowadź swój adres e-mail" **>
             </div>
 
             <div class="mb-4 sm:mb-6">
                 <label for="password" class="block text-sm sm:text-base text-[#13293D] font-medium">Hasło:</label>
                 <input type="password" name="password" id="password"
                     class="w-full p-2 sm:p-3 border border-[#2A628F] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5FA8D3] text-sm"
-                    required>
+                    required **aria-label="Wprowadź swoje hasło" **>
             </div>
 
             <button type="submit"
-                class="w-full bg-[#13293D] text-white p-2 sm:p-3 rounded-lg font-semibold hover:bg-[#16324F] transition duration-300 text-sm sm:text-base">Zaloguj
+                class="w-full bg-[#13293D] text-white p-2 sm:p-3 rounded-lg font-semibold hover:bg-[#16324F] transition duration-300 text-sm sm:text-base"
+                **aria-label="Zaloguj się do systemu" **>Zaloguj
                 się</button>
         </form>
 
         <p class="mt-2 sm:mt-4 text-center text-sm sm:text-base">
-            Nie masz konta? <a href="{{ route('register') }}" class="text-[#5FA8D3] hover:underline">Zarejestruj
+            Nie masz konta? <a href="{{ route('register') }}" class="text-[#5FA8D3] hover:underline"
+                **aria-label="Przejdź do strony rejestracji" **>Zarejestruj
                 się</a>
         </p>
         <p class="mt-2 sm:mt-4 text-center text-sm sm:text-base">
-            <a href="{{ route('landing') }}" class="text-accent hover:underline">Strona główna</a>
+            <a href="{{ route('landing') }}" class="text-accent hover:underline"
+                **aria-label="Przejdź do strony głównej" **>Strona główna</a>
         </p>
     </div>
 
