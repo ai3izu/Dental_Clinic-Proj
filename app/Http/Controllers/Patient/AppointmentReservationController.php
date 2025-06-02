@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AppointmentReservationController
 {
@@ -37,13 +38,22 @@ class AppointmentReservationController
             return back()->withErrors(['time' => 'Godzina wizyty musi być pełną godziną między 09:00 a 17:00.'])->withInput();
         }
 
-        $existingAppointment = Appointment::where('doctor_id', $request->doctor_id)
+        $existingDoctorAppointment = Appointment::where('doctor_id', $request->doctor_id)
             ->where('appointment_date', $appointmentDate)
             ->where('status', 'scheduled')
             ->first();
 
-        if ($existingAppointment) {
-            return back()->withErrors(['time' => 'Wybrana godzina jest już zajęta w tym dniu. Proszę wybrać inny termin.'])->withInput();
+        if ($existingDoctorAppointment) {
+            return back()->withErrors(['time' => 'Wybrana godzina jest już zajęta u tego lekarza w tym dniu. Proszę wybrać inny termin.'])->withInput();
+        }
+
+        $patientExistingAppointment = Appointment::where('patient_id', Auth::user()->patient->id)
+            ->where('appointment_date', $appointmentDate)
+            ->where('status', 'scheduled')
+            ->first();
+
+        if ($patientExistingAppointment) {
+            return back()->withErrors(['time' => 'Masz już zaplanowaną inną wizytę na tę datę i godzinę. Proszę wybrać inny termin.'])->withInput();
         }
 
         Appointment::create([
@@ -66,13 +76,14 @@ class AppointmentReservationController
 
         $date = Carbon::parse($request->date);
         $doctor = Doctor::find($request->doctor_id);
+        $patientId = Auth::user()->patient->id;
 
         $startOfDay = $date->copy()->hour(9)->minute(0)->second(0);
         $endOfDay = $date->copy()->hour(17)->minute(0)->second(0);
 
         $allPossibleSlots = CarbonPeriod::create($startOfDay, '60 minutes', $endOfDay)->toArray();
 
-        $takenSlots = Appointment::where('doctor_id', $doctor->id)
+        $takenSlotsByDoctor = Appointment::where('doctor_id', $doctor->id)
             ->whereDate('appointment_date', $date)
             ->where('status', 'scheduled')
             ->pluck('appointment_date')
@@ -81,11 +92,25 @@ class AppointmentReservationController
             })
             ->toArray();
 
-        $availableSlots = collect($allPossibleSlots)->filter(function ($slot) use ($takenSlots, $date) {
-            if ($slot->isSameDay(Carbon::now())) {
-                return $slot->isAfter(Carbon::now()->subMinutes(5)) && !in_array($slot->format('H:i'), $takenSlots);
+        $takenSlotsByPatient = Appointment::where('patient_id', $patientId)
+            ->whereDate('appointment_date', $date)
+            ->where('status', 'scheduled')
+            ->pluck('appointment_date')
+            ->map(function ($date) {
+                return Carbon::parse($date)->format('H:i');
+            })
+            ->toArray();
+
+        $allTakenSlots = array_merge($takenSlotsByDoctor, $takenSlotsByPatient);
+        $now = Carbon::now();
+
+        $availableSlots = collect($allPossibleSlots)->filter(function ($slot) use ($allTakenSlots, $now, $date) {
+            if ($slot->isSameDay($now)) {
+                $isAfterNow = $slot->isAfter($now->copy()->addMinutes(5));
+                $isTaken = in_array($slot->format('H:i'), $allTakenSlots);
+                return $isAfterNow && !$isTaken;
             }
-            return !in_array($slot->format('H:i'), $takenSlots);
+            return !in_array($slot->format('H:i'), $allTakenSlots);
         })->map(function ($slot) {
             return $slot->format('H:i');
         })->values();

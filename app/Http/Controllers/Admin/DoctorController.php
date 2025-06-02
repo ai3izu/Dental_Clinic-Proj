@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log; // Pamiętaj o dodaniu Log do use
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -18,14 +18,26 @@ class DoctorController
     {
         return redirect()->route('admin.dashboard', ['tab' => 'doctors']);
     }
+
     public function edit($id)
     {
         $doctor = Doctor::findOrFail($id);
         return view('admin.doctor-form', compact('doctor'));
     }
+
     public function destroy($id)
     {
         $doctor = Doctor::findOrFail($id);
+
+        if ($doctor->photo_url) {
+            $oldPathOnDisk = Str::after($doctor->photo_url, 'storage/');
+            if (Storage::disk('public')->exists($oldPathOnDisk)) {
+                Storage::disk('public')->delete($oldPathOnDisk);
+                Log::info("Usunięto zdjęcie lekarza podczas usuwania konta: " . $oldPathOnDisk);
+            } else {
+                Log::warning("Nie znaleziono zdjęcia do usunięcia podczas usuwania konta lekarza: " . $oldPathOnDisk);
+            }
+        }
         $doctor->delete();
         $doctor->user()->delete();
 
@@ -59,13 +71,17 @@ class DoctorController
             $file = $request->file('photo');
 
             if ($doctor->photo_url) {
-                $oldPath = str_replace('storage/', 'public/', $doctor->photo_url);
-                Storage::delete($oldPath);
-                Log::info("Usunięto stary plik: " . $oldPath);
+                $oldPathOnDisk = Str::after($doctor->photo_url, 'storage/');
+                if (Storage::disk('public')->exists($oldPathOnDisk)) {
+                    Storage::disk('public')->delete($oldPathOnDisk);
+                    Log::info("Usunięto stary plik lekarza: " . $oldPathOnDisk);
+                } else {
+                    Log::warning("Stary plik lekarza nie istnieje na dysku publicznym: " . $oldPathOnDisk . " (photo_url w DB: " . $doctor->photo_url . ")");
+                }
             }
+
             $extension = $file->getClientOriginalExtension();
-            // zmienic z time na uuid
-            $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $extension;
+            $filename = (string) Str::uuid() . '.' . $extension;
             $path = $file->storeAs('images', $filename, 'public');
 
             $updateData['photo_url'] = 'storage/' . $path;
@@ -76,6 +92,7 @@ class DoctorController
         return redirect()->route('admin.dashboard', ['tab' => 'doctors'])
             ->with('success', 'Dane lekarza zostały zaktualizowane.');
     }
+
     public function create()
     {
         return view('admin.doctor-form');
@@ -96,10 +113,9 @@ class DoctorController
         $photoPath = null;
 
         if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
-
             $file = $request->file('photo');
             $extension = $file->getClientOriginalExtension();
-            $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $extension;
+            $filename = (string) Str::uuid() . '.' . $extension;
 
             $path = $file->storeAs('images', $filename, 'public');
             $photoPath = 'storage/' . $path;
@@ -117,9 +133,9 @@ class DoctorController
         return redirect()->route('admin.dashboard', ['tab' => 'doctors'])
             ->with('success', 'Lekarz dodany pomyślnie');
     }
+
     public function publicIndex()
     {
-        dd("DoctorController::publicIndex() została wywołana!");
         $doctors = Doctor::with('user')
             ->whereHas('user', function ($query) {
                 $query->where('role', 'doctor');

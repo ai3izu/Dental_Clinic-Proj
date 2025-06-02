@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Doctor\DoctorDashboardController;
+use App\Http\Controllers\Doctor\DoctorProfileUpdateController;
 use App\Http\Controllers\Patient\AppointmentReservationController;
 use App\Http\Controllers\Patient\PatientDashboardController;
 use App\Http\Controllers\Patient\PatientReviewController;
@@ -95,4 +96,9 @@ Route::middleware(['auth', 'role:doctor'])->prefix('doctor')->name('doctor.')->g
     // notes for appointment
     Route::get('/notes/{appointment}', [DoctorDashboardController::class, 'showNotesForm'])->name('notes.form');
     Route::post('/appointments/{appointment}/notes', [DoctorDashboardController::class, 'addNotes'])->name('appointments.notes');
+
+
+    // profile edit
+    Route::get('/profile/edit', [DoctorProfileUpdateController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [DoctorProfileUpdateController::class, 'update'])->name('profile.update');
 });

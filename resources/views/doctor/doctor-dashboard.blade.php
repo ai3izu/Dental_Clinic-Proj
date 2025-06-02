@@ -15,6 +15,11 @@
             class="px-4 py-2 rounded-lg font-semibold">
             Anulowane wizyty
         </button>
+
+        <a href="{{ route('doctor.profile.edit') }}"
+            class="bg-[#28A745] hover:bg-[#218838] text-white px-4 py-2 rounded-lg font-semibold whitespace-nowrap mt-2 sm:mt-0">
+            Edytuj profil
+        </a>
     </div>
 
     <div x-show="tab === 'upcoming'" x-cloak class="bg-[#EAF6FF] p-4 rounded-lg shadow space-y-4">
@@ -42,24 +47,25 @@
                         <form method="POST" action="{{ route('doctor.appointment.reschedule', $appointment->id) }}"
                             class="flex flex-col gap-3 sm:flex-row sm:items-end" x-data="{
                                 selectedDate: '{{ old('new_appointment_date', \Carbon\Carbon::parse($appointment->appointment_date)->format('Y-m-d')) }}',
-
+                            
                                 selectedTime: '{{ old('new_appointment_time', \Carbon\Carbon::parse($appointment->appointment_date)->format('H:i')) }}',
-
+                            
                                 availableTimes: [],
-
+                            
                                 doctorId: {{ $doctor->id }},
-
+                                appointmentId: {{ $appointment->id }},
+                            
                                 fetchAvailableTimes() {
                                     if (!this.selectedDate) {
                                         this.availableTimes = [];
                                         this.selectedTime = '';
                                         return;
                                     }
-                                    fetch(`{{ route('doctor.appointments.available_slots') }}?date=${this.selectedDate}&doctor_id=${this.doctorId}`)
+                                    fetch(`{{ route('doctor.appointments.available_slots') }}?date=${this.selectedDate}&doctor_id=${this.doctorId}&appointment_id=${this.appointmentId}`)
                                         .then(response => response.json())
                                         .then(data => {
                                             this.availableTimes = data;
-
+                            
                                             if (!this.availableTimes.includes(this.selectedTime)) {
                                                 if (this.availableTimes.length > 0) {
                                                     this.selectedTime = this.availableTimes[0];

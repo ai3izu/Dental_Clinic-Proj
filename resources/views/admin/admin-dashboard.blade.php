@@ -28,6 +28,12 @@
                         class="px-3 py-2 text-sm md:text-base md:px-4 rounded-lg bg-gray-200 text-[#13293D] font-semibold whitespace-nowrap">
                         Transakcje
                     </a>
+
+                    <a :href="`{{ route('admin.dashboard', ['tab' => 'statistics']) }}`"
+                        :class="{ 'bg-[#236DAA] text-white': tab === 'statistics' }"
+                        class="px-3 py-2 text-sm md:text-base md:px-4 rounded-lg bg-gray-200 text-[#13293D] font-semibold whitespace-nowrap">
+                        Statystyki
+                    </a>
                 </div>
             </nav>
 
@@ -190,7 +196,7 @@
                             <td class="py-2 px-4">{{ $appointment->doctor->user->first_name }}
                                 {{ $appointment->doctor->user->last_name }}</td>
                             <td class="py-2 px-4">{{ __('db.appointment_statuses.' . $appointment->status) }}</td>
-                            <td class="py-2 px-4">{{ __('db.visit_types.' . $appointment->visit_type)  }}</td>
+                            <td class="py-2 px-4">{{ __('db.visit_types.' . $appointment->visit_type) }}</td>
                             <td class="py-2 px-4">{{ $appointment->notes }}</td>
                             <td class="py-2 px-4">
                                 <a href="{{ route('admin.appointments.edit', $appointment->id) }}"
@@ -305,5 +311,144 @@
                 </div>
             @endif
         </section>
+
+        <section x-show="tab === 'statistics'" x-cloak class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-2xl font-bold text-[#13293D] mb-6">Statystyki Systemu</h3>
+
+            @if ($statistics)
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-200">
+                        <h4 class="text-lg font-semibold text-blue-800">Wizyty Odbyte</h4>
+                        <p class="text-3xl font-bold text-blue-600 mt-2">
+                            {{ $statistics['total_completed_appointments'] }}</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg shadow-sm border border-green-200">
+                        <h4 class="text-lg font-semibold text-green-800">Zarejestrowani Pacjenci</h4>
+                        <p class="text-3xl font-bold text-green-600 mt-2">
+                            {{ $statistics['total_registered_patients'] }}</p>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg shadow-sm border border-purple-200">
+                        <h4 class="text-lg font-semibold text-purple-800">Zarejestrowani Dentyści</h4>
+                        <p class="text-3xl font-bold text-purple-600 mt-2">
+                            {{ $statistics['total_registered_doctors'] }}</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm border border-yellow-200">
+                        <h4 class="text-lg font-semibold text-yellow-800">Wszystkie Wizyty</h4>
+                        <p class="text-3xl font-bold text-yellow-600 mt-2">{{ $statistics['total_appointments'] }}</p>
+                    </div>
+                    <div class="bg-indigo-50 p-4 rounded-lg shadow-sm border border-indigo-200">
+                        <h4 class="text-lg font-semibold text-indigo-800">Opłacone Transakcje</h4>
+                        <p class="text-3xl font-bold text-indigo-600 mt-2">
+                            {{ $statistics['total_paid_transactions'] }}</p>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-[#13293D] mb-4">Wizyty w ostatnich 7 dniach</h3>
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
+                    <canvas id="appointmentsChart"></canvas>
+                </div>
+            @else
+                <p class="text-gray-600">Brak danych statystycznych do wyświetlenia.</p>
+            @endif
+        </section>
     </section>
 </div>
+
+
+@push('scripts')
+    {{-- chart.js --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function initializeChart() {
+            const currentTab = '{{ request()->get('tab', 'patients') }}';
+
+            if (currentTab === 'statistics') {
+                const statisticsData = @json($statistics ?? null);
+                if (statisticsData && statisticsData.appointments_last_7_days && statisticsData.appointments_last_7_days
+                    .length > 0) {
+                    const appointmentsData = statisticsData.appointments_last_7_days;
+                    const labels = appointmentsData.map(item => item.date);
+                    const data = appointmentsData.map(item => item.count);
+                    const ctx = document.getElementById('appointmentsChart');
+
+                    if (ctx) {
+                        if (Chart.getChart(ctx)) {
+                            Chart.getChart(ctx).destroy();
+                        }
+
+                        new Chart(ctx.getContext('2d'), {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Liczba wizyt',
+                                    data: data,
+                                    fill: true,
+                                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                                    borderColor: 'rgba(59, 130, 246, 1)',
+                                    borderWidth: 2,
+                                    tension: 0.4,
+                                    pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                                    pointBorderColor: '#fff',
+                                    pointHoverBackgroundColor: '#fff',
+                                    pointHoverBorderColor: 'rgba(59, 130, 246, 1)'
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: 'Liczba wizyt w ostatnich 7 dniach',
+                                        font: {
+                                            size: 16
+                                        },
+                                        color: '#333'
+                                    },
+                                    tooltip: {
+                                        mode: 'index',
+                                        intersect: false,
+                                    },
+                                    legend: {
+                                        display: false
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        title: {
+                                            display: true,
+                                            text: 'Liczba wizyt',
+                                            font: {
+                                                size: 14
+                                            },
+                                            color: '#555'
+                                        },
+                                        ticks: {
+                                            precision: 0
+                                        }
+                                    },
+                                    x: {
+                                        title: {
+                                            display: true,
+                                            text: 'Data',
+                                            font: {
+                                                size: 14
+                                            },
+                                            color: '#555'
+                                        },
+                                        grid: {
+                                            display: false
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        }
+        window.onload = initializeChart;
+    </script>
+@endpush

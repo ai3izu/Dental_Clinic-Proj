@@ -17,7 +17,13 @@
                     class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-2">
                     <div class="flex flex-col items-center">
                         @if ($doctor->photo_url)
-                            <img src="{{ asset($doctor->photo_url) }}" alt="{{ $doctor->photo_alt }}"
+                            @php
+                                $imageUrl = $doctor->photo_url;
+                                if (!Str::startsWith($imageUrl, 'storage/')) {
+                                    $imageUrl = 'storage/' . $imageUrl;
+                                }
+                            @endphp
+                            <img src="{{ asset($imageUrl) }}" alt="{{ $doctor->photo_alt }}"
                                 class="w-32 h-32 rounded-full object-cover mb-4">
                         @else
                             <div class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center mb-4">
@@ -43,6 +49,8 @@
             @endforeach
         </div>
         <div class="mt-10">
+            {{-- Pamiętaj, aby $doctors w kontrolerze był instancją paginatora, np. ->paginate(10) --}}
+            {{-- Jeśli $doctors jest kolekcją (->get()), ten link nie zadziała --}}
             {{ $doctors->links() }}
         </div>
     </div>

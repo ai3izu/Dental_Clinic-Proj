@@ -7,6 +7,7 @@ use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\Review;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardContoller
@@ -21,8 +22,9 @@ class DashboardContoller
         $appointments = $tab === 'appointments' ? $this->getAppointments($search) : null;
         $reviews = $tab === 'reviews' ? $this->getReviews($search) : null;
         $transactions = $tab === 'transactions' ? $this->getTransactions($search) : null;
+        $statistics = $tab === 'statistics' ? $this->getStatistics() : null;
 
-        return view('dashboard', compact('patients', 'doctors', 'appointments', 'reviews', 'transactions', 'tab'));
+        return view('dashboard', compact('patients', 'doctors', 'appointments', 'reviews', 'transactions', 'statistics', 'tab'));
     }
 
     private function getPatients($search)
@@ -100,5 +102,33 @@ class DashboardContoller
                 });
             })
             ->paginate(20);
+    }
+
+    private function getStatistics()
+    {
+        $totalCompletedAppointments = Appointment::where('status', 'completed')->count();
+        $totalRegisteredPatients = Patient::count();
+        $totalRegisteredDoctors = Doctor::count();
+        $totalAppointments = Appointment::count();
+        $totalTransactions = Transaction::where('status', 'paid')->count();
+
+        $appointmentsLast7Days = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = Carbon::today()->subDays($i);
+            $count = Appointment::whereDate('appointment_date', $date)->count();
+            $appointmentsLast7Days[] = [
+                'date' => $date->format('Y-m-d'),
+                'count' => $count,
+            ];
+        }
+
+        return [
+            'total_completed_appointments' => $totalCompletedAppointments,
+            'total_registered_patients' => $totalRegisteredPatients,
+            'total_registered_doctors' => $totalRegisteredDoctors,
+            'total_appointments' => $totalAppointments,
+            'total_paid_transactions' => $totalTransactions,
+            'appointments_last_7_days' => $appointmentsLast7Days,
+        ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Doctor;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth; // Dodaj tę linię
 
 class UpdateDoctorRequest extends FormRequest
 {
@@ -22,13 +23,19 @@ class UpdateDoctorRequest extends FormRequest
      */
     public function rules(): array
     {
-        $doctorId = $this->route('doctor');
-        $userId = Doctor::findOrFail($doctorId)->user_id;
+        $userIdToIgnore = null;
+        if ($this->route('doctor')) {
+            $doctorId = $this->route('doctor');
+            $doctor = Doctor::findOrFail($doctorId);
+            $userIdToIgnore = $doctor->user_id;
+        } else if (Auth::check()) {
+            $userIdToIgnore = Auth::id();
+        }
 
         return [
             'first_name' => 'sometimes|required|string|max:255',
             'last_name' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|email|unique:users,email,' . $userId,
+            'email' => 'sometimes|required|email|unique:users,email,' . $userIdToIgnore,
             'password' => 'nullable|string|min:8|confirmed',
             'specialization' => 'nullable|string|max:255',
             'phone_number' => 'nullable|string|max:15',
