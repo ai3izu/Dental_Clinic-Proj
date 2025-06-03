@@ -30,6 +30,25 @@ class DoctorPageController
             }
         }
 
-        return view('public.doctor-page', compact('doctor', 'canAddReview'));
+        $services = [
+            'Dentysta ogólny' => [
+                'root_canal' => 'Leczenie kanałowe',
+                'orthodontics' => 'Ortodoncja'
+            ],
+            'Stomatolog dziecięcy' => [
+                'cavity_treatment' => 'Leczenie próchnicy u dzieci'
+            ],
+            'Ortodonta' => [
+                'orthodontics' => 'Leczenie ortodontyczne'
+            ],
+            'Chirurg stomatologiczny' => [
+                'root_canal' => 'Leczenie kanałowe',
+                'implantology' => 'Implantologia'
+            ]
+        ];
+
+        $doctorServices = $services[$doctor->specialization] ?? [];
+
+        return view('public.doctor-page', compact('doctor', 'canAddReview', 'doctorServices'));
     }
 }
