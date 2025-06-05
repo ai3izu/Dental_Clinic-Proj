@@ -17,13 +17,15 @@ use App\Http\Controllers\Patient\ProfileCompletion;
 use App\Http\Controllers\Public\DoctorPageController;
 use Illuminate\Support\Facades\Route;
 
-// Default route
+
+// platnosci, limity przy migracjach, dokumentacja, start bat, uproszczenie seederow
+
+
+// Routing ogólnodostępny
 Route::get('/', function () {
     return view('landing');
 })->name('landing');
 
-
-// Authentication routes
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
@@ -40,7 +42,7 @@ Route::get('/doctors', [DoctorListController::class, 'index'])->name('doctors.pu
 Route::get('/doctors/{doctor}', [DoctorPageController::class, 'index'])->name('doctors.show');
 
 
-// Routes for the patient
+// Routing dla pacjenta
 Route::middleware(['auth', 'role:patient'])->group(function () {
     Route::get('/patient/complete-profile', [ProfileCompletion::class, 'show'])->name('patient.complete-profile');
     Route::post('/patient/complete-profile', [ProfileCompletion::class, 'update'])->name('patient.complete-profile.update');
@@ -57,24 +59,20 @@ Route::middleware(['auth', 'role:patient'])->group(function () {
     Route::post('/doctors/{doctor}/reviews', [PatientReviewController::class, 'storePublic'])->name('doctors.reviews.store');
 });
 
-// Routes for the admin 
+// Routing dla administratora
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardContoller::class, 'index'])->name('dashboard');
-
 
     Route::resource('patients', PatientController::class)->except(['show']);
     Route::resource('doctors', DoctorController::class)->except(['show']);
     Route::resource('appointments', AppointmentController::class)->except(['show']);
     Route::get('/appointments/available-slots', [AppointmentController::class, 'getAvailableSlots'])->name('appointments.available_slots');
 
-
-
-
     Route::resource('reviews', ReviewController::class)->except(['show']);
     Route::resource('transactions', TransactionController::class)->except(['show']);
 });
 
-// Routes for the doctor
+// Routing dla dentysty
 Route::middleware(['auth', 'role:doctor'])->prefix('doctor')->name('doctor.')->group(function () {
     // dashboard
     Route::get('/dashboard', [DoctorDashboardController::class, 'dashboard'])->name('dashboard');

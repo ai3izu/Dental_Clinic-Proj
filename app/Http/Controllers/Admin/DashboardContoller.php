@@ -24,7 +24,18 @@ class DashboardContoller
         $transactions = $tab === 'transactions' ? $this->getTransactions($search) : null;
         $statistics = $tab === 'statistics' ? $this->getStatistics() : null;
 
-        return view('dashboard', compact('patients', 'doctors', 'appointments', 'reviews', 'transactions', 'statistics', 'tab'));
+        return view(
+            'dashboard',
+            compact(
+                'patients',
+                'doctors',
+                'appointments',
+                'reviews',
+                'transactions',
+                'statistics',
+                'tab'
+            )
+        );
     }
 
     private function getPatients($search)

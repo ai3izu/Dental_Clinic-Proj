@@ -49,8 +49,6 @@
             @endforeach
         </div>
         <div class="mt-10">
-            {{-- Pamiętaj, aby $doctors w kontrolerze był instancją paginatora, np. ->paginate(10) --}}
-            {{-- Jeśli $doctors jest kolekcją (->get()), ten link nie zadziała --}}
             {{ $doctors->links() }}
         </div>
     </div>

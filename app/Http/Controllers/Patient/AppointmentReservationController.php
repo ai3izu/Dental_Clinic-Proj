@@ -29,7 +29,10 @@ class AppointmentReservationController
         $filteredVisitTypes = $this->specializationVisitTypes[$doctor->specialization] ?? [];
         $availableSlots = collect();
 
-        return view('patient.apointment-reservation', compact('doctor', 'availableSlots', 'filteredVisitTypes'));
+        return view(
+            'patient.apointment-reservation',
+            compact('doctor', 'availableSlots', 'filteredVisitTypes')
+        );
     }
 
     public function store(Request $request)
