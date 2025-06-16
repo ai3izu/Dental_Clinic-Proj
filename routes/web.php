@@ -17,10 +17,6 @@ use App\Http\Controllers\Patient\ProfileCompletion;
 use App\Http\Controllers\Public\DoctorPageController;
 use Illuminate\Support\Facades\Route;
 
-
-// platnosci, limity przy migracjach, dokumentacja, start bat, uproszczenie seederow
-
-
 // Routing ogólnodostępny
 Route::get('/', function () {
     return view('landing');

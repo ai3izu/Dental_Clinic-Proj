@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('specialization')->nullable();
-            $table->string('phone_number')->nullable();
+            $table->string('specialization', 30)->nullable();
+            $table->string('phone_number', 15)->nullable();
             $table->string('photo_url')->nullable();
-            $table->string('photo_alt')->nullable();
+            $table->string('photo_alt', 100)->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });

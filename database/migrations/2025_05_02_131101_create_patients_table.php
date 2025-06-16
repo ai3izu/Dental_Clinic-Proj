@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->ondelete('cascade');
-            $table->string('phone_number')->nullable();
-            $table->string('postal_code')->nullable();
-            $table->string('city')->nullable();
-            $table->string('street')->nullable();
-            $table->string('apartment_number')->nullable();
-            $table->string('staircase_number')->nullable();
+            $table->string('phone_number', 15)->nullable();
+            $table->string('postal_code', 7)->nullable();
+            $table->string('city', 30)->nullable();
+            $table->string('street', 50)->nullable();
+            $table->string('apartment_number', 5)->nullable();
+            $table->string('staircase_number', 5)->nullable();
             $table->date('birth_date')->nullable();
             $table->timestamps();
         });
